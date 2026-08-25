@@ -6,13 +6,13 @@ pub(super) struct SessionDirectories {
 }
 
 impl SessionDirectories {
-    fn into_new_session_request(self, mcp_servers: Vec<acp::McpServer>) -> acp::NewSessionRequest {
+    pub(super) fn into_new_session_request(self, mcp_servers: Vec<acp::McpServer>) -> acp::NewSessionRequest {
         acp::NewSessionRequest::new(self.cwd)
             .additional_directories(self.additional_directories)
             .mcp_servers(mcp_servers)
     }
 
-    fn into_load_session_request(
+    pub(super) fn into_load_session_request(
         self,
         session_id: acp::SessionId,
         mcp_servers: Vec<acp::McpServer>,
@@ -22,7 +22,7 @@ impl SessionDirectories {
             .mcp_servers(mcp_servers)
     }
 
-    fn into_resume_session_request(
+    pub(super) fn into_resume_session_request(
         self,
         session_id: acp::SessionId,
         mcp_servers: Vec<acp::McpServer>,
