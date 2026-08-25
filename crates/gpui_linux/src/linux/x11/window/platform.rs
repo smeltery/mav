@@ -461,7 +461,7 @@ impl PlatformWindow for X11Window {
         self.a11y_init_impl(callbacks);
     }
 
-    fn a11y_tree_update(&self, tree_update: accesskit::TreeUpdate) {
+    fn a11y_tree_update(&self, tree_update: ::accesskit::TreeUpdate) {
         self.a11y_tree_update_impl(tree_update);
     }
 

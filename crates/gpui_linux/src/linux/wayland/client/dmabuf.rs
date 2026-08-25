@@ -45,7 +45,7 @@ impl Dispatch<zwp_linux_dmabuf_feedback_v1::ZwpLinuxDmabufFeedbackV1, ()> for Dm
     }
 }
 
-fn detect_compositor_gpu() -> Option<CompositorGpuHint> {
+pub(super) fn detect_compositor_gpu() -> Option<CompositorGpuHint> {
     let connection = Connection::connect_to_env().ok()?;
     let (globals, mut event_queue) = registry_queue_init::<DmabufProbeState>(&connection).ok()?;
     let queue_handle = event_queue.handle();

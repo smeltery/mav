@@ -1567,7 +1567,7 @@ impl PlatformWindow for WaylandWindow {
         self.borrow_mut().accesskit_adapter = Some(adapter);
     }
 
-    fn a11y_tree_update(&self, tree_update: accesskit::TreeUpdate) {
+    fn a11y_tree_update(&self, tree_update: ::accesskit::TreeUpdate) {
         let mut state = self.borrow_mut();
         if let Some(adapter) = state.accesskit_adapter.as_mut() {
             adapter.update_if_active(|| tree_update);
@@ -1580,19 +1580,19 @@ impl PlatformWindow for WaylandWindow {
 }
 
 struct TrivialActivationHandler {
-    callback: Box<dyn Fn() -> Option<accesskit::TreeUpdate> + Send + 'static>,
+    callback: Box<dyn Fn() -> Option<::accesskit::TreeUpdate> + Send + 'static>,
 }
 
-impl accesskit::ActivationHandler for TrivialActivationHandler {
-    fn request_initial_tree(&mut self) -> Option<accesskit::TreeUpdate> {
+impl ::accesskit::ActivationHandler for TrivialActivationHandler {
+    fn request_initial_tree(&mut self) -> Option<::accesskit::TreeUpdate> {
         (self.callback)()
     }
 }
 
-struct TrivialActionHandler(Box<dyn Fn(accesskit::ActionRequest) + Send + 'static>);
+struct TrivialActionHandler(Box<dyn Fn(::accesskit::ActionRequest) + Send + 'static>);
 
-impl accesskit::ActionHandler for TrivialActionHandler {
-    fn do_action(&mut self, request: accesskit::ActionRequest) {
+impl ::accesskit::ActionHandler for TrivialActionHandler {
+    fn do_action(&mut self, request: ::accesskit::ActionRequest) {
         (self.0)(request);
     }
 }
@@ -1601,7 +1601,7 @@ struct TrivialDeactivationHandler {
     callback: Box<dyn Fn() + Send + 'static>,
 }
 
-impl accesskit::DeactivationHandler for TrivialDeactivationHandler {
+impl ::accesskit::DeactivationHandler for TrivialDeactivationHandler {
     fn deactivate_accessibility(&mut self) {
         (self.callback)();
     }

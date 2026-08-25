@@ -116,59 +116,60 @@ pub struct Output {
 }
 
 pub(crate) struct WaylandClientState {
-    serial_tracker: SerialTracker,
-    globals: Globals,
+    pub(super) serial_tracker: SerialTracker,
+    pub(super) globals: Globals,
     pub gpu_context: GpuContext,
     pub compositor_gpu: Option<CompositorGpuHint>,
-    wl_seat: wl_seat::WlSeat, // TODO: Multi seat support
-    wl_pointer: Option<wl_pointer::WlPointer>,
-    pinch_gesture: Option<zwp_pointer_gesture_pinch_v1::ZwpPointerGesturePinchV1>,
-    pinch_scale: f32,
-    wl_keyboard: Option<wl_keyboard::WlKeyboard>,
-    cursor_shape_device: Option<wp_cursor_shape_device_v1::WpCursorShapeDeviceV1>,
-    data_device: Option<wl_data_device::WlDataDevice>,
-    primary_selection: Option<zwp_primary_selection_device_v1::ZwpPrimarySelectionDeviceV1>,
-    text_input: Option<zwp_text_input_v3::ZwpTextInputV3>,
-    pre_edit_text: Option<String>,
-    ime_pre_edit: Option<String>,
-    composing: bool,
+    pub(super) wl_seat: wl_seat::WlSeat, // TODO: Multi seat support
+    pub(super) wl_pointer: Option<wl_pointer::WlPointer>,
+    pub(super) pinch_gesture: Option<zwp_pointer_gesture_pinch_v1::ZwpPointerGesturePinchV1>,
+    pub(super) pinch_scale: f32,
+    pub(super) wl_keyboard: Option<wl_keyboard::WlKeyboard>,
+    pub(super) cursor_shape_device: Option<wp_cursor_shape_device_v1::WpCursorShapeDeviceV1>,
+    pub(super) data_device: Option<wl_data_device::WlDataDevice>,
+    pub(super) primary_selection:
+        Option<zwp_primary_selection_device_v1::ZwpPrimarySelectionDeviceV1>,
+    pub(super) text_input: Option<zwp_text_input_v3::ZwpTextInputV3>,
+    pub(super) pre_edit_text: Option<String>,
+    pub(super) ime_pre_edit: Option<String>,
+    pub(super) composing: bool,
     // Surface to Window mapping
-    windows: HashMap<ObjectId, WaylandWindowStatePtr>,
+    pub(super) windows: HashMap<ObjectId, WaylandWindowStatePtr>,
     // Output to scale mapping
-    outputs: HashMap<ObjectId, Output>,
-    in_progress_outputs: HashMap<ObjectId, InProgressOutput>,
-    wl_outputs: HashMap<ObjectId, wl_output::WlOutput>,
-    keyboard_layout: LinuxKeyboardLayout,
-    keymap_state: Option<xkb::State>,
-    compose_state: Option<xkb::compose::State>,
-    drag: DragState,
-    click: ClickState,
-    repeat: KeyRepeat,
+    pub(super) outputs: HashMap<ObjectId, Output>,
+    pub(super) in_progress_outputs: HashMap<ObjectId, InProgressOutput>,
+    pub(super) wl_outputs: HashMap<ObjectId, wl_output::WlOutput>,
+    pub(super) keyboard_layout: LinuxKeyboardLayout,
+    pub(super) keymap_state: Option<xkb::State>,
+    pub(super) compose_state: Option<xkb::compose::State>,
+    pub(super) drag: DragState,
+    pub(super) click: ClickState,
+    pub(super) repeat: KeyRepeat,
     pub modifiers: Modifiers,
     pub capslock: Capslock,
-    axis_source: AxisSource,
+    pub(super) axis_source: AxisSource,
     pub mouse_location: Option<Point<Pixels>>,
-    continuous_scroll_delta: Option<Point<Pixels>>,
-    discrete_scroll_delta: Option<Point<f32>>,
-    vertical_modifier: f32,
-    horizontal_modifier: f32,
-    scroll_event_received: bool,
-    enter_token: Option<()>,
-    button_pressed: Option<MouseButton>,
-    mouse_focused_window: Option<WaylandWindowStatePtr>,
-    keyboard_focused_window: Option<WaylandWindowStatePtr>,
-    loop_handle: LoopHandle<'static, WaylandClientStatePtr>,
-    cursor_style: Option<CursorStyle>,
-    cursor_hidden_window: Option<WaylandWindowStatePtr>,
-    clipboard: Clipboard,
-    data_offers: Vec<DataOffer<WlDataOffer>>,
-    primary_data_offer: Option<DataOffer<ZwpPrimarySelectionOfferV1>>,
-    cursor: Cursor,
-    pending_activation: Option<PendingActivation>,
-    startup_activation_token: Option<String>,
-    event_loop: Option<EventLoop<'static, WaylandClientStatePtr>>,
+    pub(super) continuous_scroll_delta: Option<Point<Pixels>>,
+    pub(super) discrete_scroll_delta: Option<Point<f32>>,
+    pub(super) vertical_modifier: f32,
+    pub(super) horizontal_modifier: f32,
+    pub(super) scroll_event_received: bool,
+    pub(super) enter_token: Option<()>,
+    pub(super) button_pressed: Option<MouseButton>,
+    pub(super) mouse_focused_window: Option<WaylandWindowStatePtr>,
+    pub(super) keyboard_focused_window: Option<WaylandWindowStatePtr>,
+    pub(super) loop_handle: LoopHandle<'static, WaylandClientStatePtr>,
+    pub(super) cursor_style: Option<CursorStyle>,
+    pub(super) cursor_hidden_window: Option<WaylandWindowStatePtr>,
+    pub(super) clipboard: Clipboard,
+    pub(super) data_offers: Vec<DataOffer<WlDataOffer>>,
+    pub(super) primary_data_offer: Option<DataOffer<ZwpPrimarySelectionOfferV1>>,
+    pub(super) cursor: Cursor,
+    pub(super) pending_activation: Option<PendingActivation>,
+    pub(super) startup_activation_token: Option<String>,
+    pub(super) event_loop: Option<EventLoop<'static, WaylandClientStatePtr>>,
     pub common: LinuxCommon,
-    ime_enabled: Option<bool>,
+    pub(super) ime_enabled: Option<bool>,
 }
 
 pub struct DragState {
@@ -201,7 +202,7 @@ pub(crate) enum PendingActivation {
 }
 
 impl WaylandClientState {
-    fn consume_startup_activation_token(&mut self, surface: &wl_surface::WlSurface) {
+    pub(super) fn consume_startup_activation_token(&mut self, surface: &wl_surface::WlSurface) {
         let Some(startup_activation_token) = self.startup_activation_token.take() else {
             return;
         };
@@ -215,7 +216,7 @@ impl WaylandClientState {
 /// This struct is required to conform to Rust's orphan rules, so we can dispatch on the state but hand the
 /// window to GPUI.
 #[derive(Clone)]
-pub struct WaylandClientStatePtr(Weak<RefCell<WaylandClientState>>);
+pub struct WaylandClientStatePtr(pub(super) Weak<RefCell<WaylandClientState>>);
 
 impl WaylandClientStatePtr {
     pub fn get_client(&self) -> Rc<RefCell<WaylandClientState>> {
@@ -398,7 +399,7 @@ impl WaylandClientState {
 }
 
 #[derive(Clone)]
-pub struct WaylandClient(Rc<RefCell<WaylandClientState>>);
+pub struct WaylandClient(pub(super) Rc<RefCell<WaylandClientState>>);
 
 impl Drop for WaylandClient {
     fn drop(&mut self) {
