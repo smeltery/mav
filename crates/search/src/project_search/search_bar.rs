@@ -1,7 +1,7 @@
 use super::*;
 
 impl Default for ProjectSearchBar {
-    pub(super) fn default() -> Self {
+    fn default() -> Self {
         Self::new()
     }
 }

@@ -27,7 +27,7 @@ impl ProjectSearch {
         }
     }
 
-    fn clone(&self, cx: &mut Context<Self>) -> Entity<Self> {
+    pub(super) fn clone(&self, cx: &mut Context<Self>) -> Entity<Self> {
         cx.new(|cx| {
             let excerpts = self
                 .excerpts
@@ -97,14 +97,14 @@ impl ProjectSearch {
         cx.notify();
     }
 
-    fn cursor(&self, kind: SearchInputKind) -> &SearchHistoryCursor {
+    pub(super) fn cursor(&self, kind: SearchInputKind) -> &SearchHistoryCursor {
         match kind {
             SearchInputKind::Query => &self.search_history_cursor,
             SearchInputKind::Include => &self.search_included_history_cursor,
             SearchInputKind::Exclude => &self.search_excluded_history_cursor,
         }
     }
-    fn cursor_mut(&mut self, kind: SearchInputKind) -> &mut SearchHistoryCursor {
+    pub(super) fn cursor_mut(&mut self, kind: SearchInputKind) -> &mut SearchHistoryCursor {
         match kind {
             SearchInputKind::Query => &mut self.search_history_cursor,
             SearchInputKind::Include => &mut self.search_included_history_cursor,
@@ -112,7 +112,7 @@ impl ProjectSearch {
         }
     }
 
-    fn search(&mut self, query: SearchQuery, cx: &mut Context<Self>) {
+    pub(super) fn search(&mut self, query: SearchQuery, cx: &mut Context<Self>) {
         let project_search_turning_into_text_finder =
             Arc::clone(&self.project_search_turning_into_text_finder);
         let search = self.project.update(cx, |project, cx| {
