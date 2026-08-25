@@ -3,14 +3,14 @@ use super::*;
 impl MarkdownPreviewView {
     /// Returns the theme chosen in `markdown_preview_theme`, or `None` if the
     /// user hasn't set one or it can't be resolved.
-    fn resolve_preview_theme(&self, cx: &App) -> Option<Arc<Theme>> {
+    pub(super) fn resolve_preview_theme(&self, cx: &App) -> Option<Arc<Theme>> {
         let theme_settings = ThemeSettings::get_global(cx);
         let theme_selection = theme_settings.markdown_preview_theme.as_ref()?;
         let theme_name = theme_selection.name(SystemAppearance::global(cx).0);
         ThemeRegistry::global(cx).get(&theme_name.0).ok()
     }
 
-    fn render_markdown_element(
+    pub(super) fn render_markdown_element(
         &self,
         preview_theme: &Option<Arc<Theme>>,
         window: &mut Window,
@@ -101,7 +101,7 @@ impl MarkdownPreviewView {
         markdown_element
     }
 
-    fn apply_checkbox_toggle_to_editor(
+    pub(super) fn apply_checkbox_toggle_to_editor(
         editor: &Entity<Editor>,
         source_range: std::ops::Range<usize>,
         new_checked: bool,
@@ -132,7 +132,11 @@ impl MarkdownPreviewView {
         });
     }
 
-    fn refresh_preview(view_handle: WeakEntity<Self>, window: &mut Window, cx: &mut App) {
+    pub(super) fn refresh_preview(
+        view_handle: WeakEntity<Self>,
+        window: &mut Window,
+        cx: &mut App,
+    ) {
         if let Some(view) = view_handle.upgrade() {
             let preview_is_focused = view.read(cx).focus_handle.contains_focused(window, cx);
             if !preview_is_focused {

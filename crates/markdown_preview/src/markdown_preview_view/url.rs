@@ -1,6 +1,6 @@
 use super::*;
 
-fn handle_url_click(
+pub(crate) fn handle_url_click(
     url: SharedString,
     view: &WeakEntity<MarkdownPreviewView>,
     base_directory: Option<PathBuf>,
@@ -78,7 +78,7 @@ fn split_preview_url(url: &str) -> (&str, Option<&str>) {
     }
 }
 
-fn resolve_preview_image(
+pub(crate) fn resolve_preview_image(
     dest_url: &str,
     base_directory: Option<&Path>,
     workspace_directory: Option<&Path>,

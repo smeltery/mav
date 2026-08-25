@@ -71,7 +71,7 @@ impl MarkdownPreviewView {
         });
     }
 
-    fn find_existing_independent_preview_item_idx(
+    pub(super) fn find_existing_independent_preview_item_idx(
         pane: &Pane,
         editor: &Entity<Editor>,
         cx: &App,
@@ -135,7 +135,7 @@ impl MarkdownPreviewView {
         )
     }
 
-    fn create_following_markdown_view(
+    pub(super) fn create_following_markdown_view(
         workspace: &mut Workspace,
         editor: Entity<Editor>,
         window: &mut Window,

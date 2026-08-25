@@ -79,7 +79,7 @@ impl MarkdownPreviewView {
         })
     }
 
-    fn workspace_updated(
+    pub(super) fn workspace_updated(
         &mut self,
         active_item: Option<Box<dyn ItemHandle>>,
         window: &mut Window,
@@ -141,7 +141,12 @@ impl MarkdownPreviewView {
         false
     }
 
-    fn set_editor(&mut self, editor: Entity<Editor>, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn set_editor(
+        &mut self,
+        editor: Entity<Editor>,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         if let Some(active) = &self.active_editor
             && active.editor == editor
         {
@@ -198,7 +203,7 @@ impl MarkdownPreviewView {
         }
     }
 
-    fn on_workspace_event(
+    pub(super) fn on_workspace_event(
         &mut self,
         workspace: &Entity<Workspace>,
         event: &workspace::Event,
@@ -222,7 +227,11 @@ impl MarkdownPreviewView {
         }
     }
 
-    fn find_canonical_editor(&self, workspace: &Workspace, cx: &App) -> Option<Entity<Editor>> {
+    pub(super) fn find_canonical_editor(
+        &self,
+        workspace: &Workspace,
+        cx: &App,
+    ) -> Option<Entity<Editor>> {
         let current = self.active_editor.as_ref()?.editor.clone();
         let our_buffer = current.read(cx).buffer().read(cx).as_singleton()?;
         let mut fallback = None;
@@ -238,7 +247,7 @@ impl MarkdownPreviewView {
         fallback
     }
 
-    fn update_markdown_from_active_editor(
+    pub(super) fn update_markdown_from_active_editor(
         &mut self,
         wait_for_debounce: bool,
         should_reveal: bool,
@@ -260,7 +269,7 @@ impl MarkdownPreviewView {
         }
     }
 
-    fn schedule_markdown_update(
+    pub(super) fn schedule_markdown_update(
         &mut self,
         wait_for_debounce: bool,
         should_reveal_selection: bool,
@@ -311,7 +320,7 @@ impl MarkdownPreviewView {
         })
     }
 
-    fn selected_source_index(editor: &Editor, cx: &mut App) -> Option<usize> {
+    pub(super) fn selected_source_index(editor: &Editor, cx: &mut App) -> Option<usize> {
         let display_snapshot = editor.display_snapshot(cx);
         let source_offset = editor
             .selections
@@ -331,7 +340,7 @@ impl MarkdownPreviewView {
         }
     }
 
-    fn sync_preview_to_source_index(
+    pub(super) fn sync_preview_to_source_index(
         &mut self,
         source_index: usize,
         reveal: bool,
@@ -346,13 +355,13 @@ impl MarkdownPreviewView {
         });
     }
 
-    fn sync_active_root_block(&mut self, cx: &mut Context<Self>) {
+    pub(super) fn sync_active_root_block(&mut self, cx: &mut Context<Self>) {
         self.markdown.update(cx, |markdown, cx| {
             markdown.set_active_root_for_source_index(self.active_source_index, cx);
         });
     }
 
-    fn move_cursor_to_source_index(
+    pub(super) fn move_cursor_to_source_index(
         editor: &Entity<Editor>,
         source_index: usize,
         window: &mut Window,
@@ -371,7 +380,7 @@ impl MarkdownPreviewView {
     }
 
     /// The absolute path of the file that is currently being previewed.
-    fn get_folder_for_active_editor(editor: &Editor, cx: &App) -> Option<PathBuf> {
+    pub(super) fn get_folder_for_active_editor(editor: &Editor, cx: &App) -> Option<PathBuf> {
         if let Some(file) = editor.file_at(MultiBufferOffset(0), cx) {
             if let Some(file) = file.as_local() {
                 file.abs_path(cx).parent().map(|p| p.to_path_buf())
