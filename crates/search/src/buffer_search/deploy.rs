@@ -96,7 +96,10 @@ impl BufferSearchBar {
         true
     }
 
-    pub(super) fn supported_options(&self, cx: &mut Context<Self>) -> workspace::searchable::SearchOptions {
+    pub(super) fn supported_options(
+        &self,
+        cx: &mut Context<Self>,
+    ) -> workspace::searchable::SearchOptions {
         self.active_searchable_item
             .as_ref()
             .map(|item| item.supported_options(cx))
@@ -122,7 +125,12 @@ impl BufferSearchBar {
         }
     }
 
-    pub(super) fn toggle_fold_all(&mut self, _: &ToggleFoldAll, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn toggle_fold_all(
+        &mut self,
+        _: &ToggleFoldAll,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         self.toggle_fold_all_in_item(window, cx);
     }
 

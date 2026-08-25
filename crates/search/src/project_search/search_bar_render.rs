@@ -1,7 +1,11 @@
 use super::*;
 
 impl Render for ProjectSearchBar {
-    pub(super) fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+    pub(super) fn render(
+        &mut self,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) -> impl IntoElement {
         let Some(search) = self.active_project_search.clone() else {
             return div().into_any_element();
         };

@@ -8,7 +8,12 @@ impl BufferSearchBar {
     pub(super) fn backtab(&mut self, _: &Backtab, window: &mut Window, cx: &mut Context<Self>) {
         self.cycle_field(Direction::Prev, window, cx);
     }
-    pub(super) fn cycle_field(&mut self, direction: Direction, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn cycle_field(
+        &mut self,
+        direction: Direction,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         let mut handles = vec![self.query_editor.focus_handle(cx)];
         if self.replace_enabled {
             handles.push(self.replacement_editor.focus_handle(cx));
@@ -89,7 +94,12 @@ impl BufferSearchBar {
         window.focus(handle, cx);
     }
 
-    pub(super) fn toggle_replace(&mut self, _: &ToggleReplace, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn toggle_replace(
+        &mut self,
+        _: &ToggleReplace,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         if self.active_searchable_item.is_some() {
             self.replace_enabled = !self.replace_enabled;
             let handle = if self.replace_enabled {
@@ -102,7 +112,12 @@ impl BufferSearchBar {
         }
     }
 
-    pub(super) fn replace_next(&mut self, _: &ReplaceNext, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn replace_next(
+        &mut self,
+        _: &ReplaceNext,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         let mut should_propagate = true;
         if !self.dismissed
             && self.active_search.is_some()

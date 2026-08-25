@@ -76,9 +76,9 @@ impl ProjectSearchView {
                 });
                 let weak_workspace = cx.entity().downgrade();
                 workspace.add_item_to_active_pane(
-                    Box::new(
-                        cx.new(|cx| ProjectSearchView::new(weak_workspace, entity, window, cx, None)),
-                    ),
+                    Box::new(cx.new(|cx| {
+                        ProjectSearchView::new(weak_workspace, entity, window, cx, None)
+                    })),
                     None,
                     true,
                     window,
@@ -129,8 +129,9 @@ impl ProjectSearchView {
             let weak_workspace = cx.entity().downgrade();
 
             let project_search = cx.new(|cx| ProjectSearch::new(workspace.project().clone(), cx));
-            let project_search_view = cx
-                .new(|cx| ProjectSearchView::new(weak_workspace, project_search, window, cx, settings));
+            let project_search_view = cx.new(|cx| {
+                ProjectSearchView::new(weak_workspace, project_search, window, cx, settings)
+            });
 
             workspace.add_item_to_active_pane(
                 Box::new(project_search_view.clone()),
@@ -154,7 +155,11 @@ impl ProjectSearchView {
                 search.set_search_option_enabled(SearchOptions::WHOLE_WORD, whole_word, cx);
             }
             if let Some(include_ignored) = action.include_ignored {
-                search.set_search_option_enabled(SearchOptions::INCLUDE_IGNORED, include_ignored, cx);
+                search.set_search_option_enabled(
+                    SearchOptions::INCLUDE_IGNORED,
+                    include_ignored,
+                    cx,
+                );
             }
             let query = action
                 .query

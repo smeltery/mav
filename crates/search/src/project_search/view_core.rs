@@ -61,7 +61,12 @@ impl ProjectSearchView {
         self.replacement_editor.read(cx).text(cx)
     }
 
-    pub(super) fn replace_next(&mut self, _: &ReplaceNext, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn replace_next(
+        &mut self,
+        _: &ReplaceNext,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         if self.entity.read(cx).pending_search.is_some() {
             return;
         }
@@ -93,7 +98,12 @@ impl ProjectSearchView {
         }
     }
 
-    pub(super) fn replace_all(&mut self, _: &ReplaceAll, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn replace_all(
+        &mut self,
+        _: &ReplaceAll,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         if self.entity.read(cx).pending_search.is_some() {
             self.pending_replace_all = true;
             return;
@@ -149,7 +159,11 @@ impl ProjectSearchView {
         self.update_results_visibility(window, cx);
     }
 
-    pub(super) fn update_results_visibility(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn update_results_visibility(
+        &mut self,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         let has_any_folded = self.results_editor.read(cx).has_any_buffer_folded(cx);
         self.results_editor.update(cx, |editor, cx| {
             if has_any_folded {

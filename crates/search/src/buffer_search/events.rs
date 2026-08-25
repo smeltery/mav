@@ -94,11 +94,20 @@ impl BufferSearchBar {
         );
     }
 
-    pub(super) fn toggle_regex(&mut self, _: &ToggleRegex, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn toggle_regex(
+        &mut self,
+        _: &ToggleRegex,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         self.toggle_search_option(SearchOptions::REGEX, window, cx)
     }
 
-    pub(super) fn clear_active_searchable_item_matches(&mut self, window: &mut Window, cx: &mut App) {
+    pub(super) fn clear_active_searchable_item_matches(
+        &mut self,
+        window: &mut Window,
+        cx: &mut App,
+    ) {
         if let Some(active_searchable_item) = self.active_searchable_item.as_ref() {
             self.active_match_index = None;
             self.searchable_items_with_matches

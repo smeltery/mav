@@ -1,7 +1,12 @@
 use super::*;
 
 impl ProjectSearchView {
-    pub(super) fn select_match(&mut self, direction: Direction, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn select_match(
+        &mut self,
+        direction: Direction,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         if let Some(index) = self.active_match_index {
             let match_ranges = self.entity.read(cx).match_ranges.clone();
 

@@ -47,7 +47,12 @@ impl ProjectSearchBar {
         }
     }
 
-    pub(super) fn cycle_field(&mut self, direction: Direction, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn cycle_field(
+        &mut self,
+        direction: Direction,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         let active_project_search = match &self.active_project_search {
             Some(active_project_search) => active_project_search,
             None => return,
@@ -115,7 +120,12 @@ impl ProjectSearchBar {
         true
     }
 
-    pub(super) fn toggle_replace(&mut self, _: &ToggleReplace, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn toggle_replace(
+        &mut self,
+        _: &ToggleReplace,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) {
         if let Some(search) = &self.active_project_search {
             search.update(cx, |this, cx| {
                 this.replace_enabled = !this.replace_enabled;
@@ -150,7 +160,11 @@ impl ProjectSearchBar {
         }
     }
 
-    pub(super) fn toggle_opened_only(&mut self, window: &mut Window, cx: &mut Context<Self>) -> bool {
+    pub(super) fn toggle_opened_only(
+        &mut self,
+        window: &mut Window,
+        cx: &mut Context<Self>,
+    ) -> bool {
         if self.active_project_search.is_none() {
             return false;
         }
