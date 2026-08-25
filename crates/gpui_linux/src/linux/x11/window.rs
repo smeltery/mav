@@ -34,6 +34,8 @@ use std::{
 
 use super::{X11Display, XINPUT_ALL_DEVICE_GROUPS, XINPUT_ALL_DEVICES};
 
+use window_impl::WmHintPropertyState;
+
 mod accesskit;
 mod decorations;
 mod platform;

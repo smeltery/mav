@@ -39,7 +39,7 @@ impl Drop for X11Window {
     }
 }
 
-enum WmHintPropertyState {
+pub(super) enum WmHintPropertyState {
     // Remove = 0,
     // Add = 1,
     Toggle = 2,

@@ -6,7 +6,7 @@ enum DpiMode {
     NotSet,
 }
 
-fn get_scale_factor(
+pub(super) fn get_scale_factor(
     connection: &XCBConnection,
     resource_database: &Database,
     screen_index: usize,
@@ -253,7 +253,10 @@ fn valid_scale_factor(scale_factor: f32) -> bool {
 }
 
 #[inline]
-fn xkb_state_for_key_event(xkb: &xkbc::State, event_state: xproto::KeyButMask) -> xkbc::State {
+pub(super) fn xkb_state_for_key_event(
+    xkb: &xkbc::State,
+    event_state: xproto::KeyButMask,
+) -> xkbc::State {
     let keymap = xkb.get_keymap();
     let mut key_event_state = xkbc::State::new(&keymap);
 

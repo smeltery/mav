@@ -1,6 +1,6 @@
 use super::*;
 
-fn take_startup_activation_token_from_environment() -> Option<String> {
+pub(super) fn take_startup_activation_token_from_environment() -> Option<String> {
     let startup_activation_token = std::env::var(XDG_ACTIVATION_TOKEN_ENV_VAR)
         .ok()
         .filter(|token| !token.is_empty());
@@ -422,7 +422,7 @@ impl Drop for WaylandClient {
 
 const WL_DATA_DEVICE_MANAGER_VERSION: u32 = 3;
 
-fn wl_seat_version(version: u32) -> u32 {
+pub(super) fn wl_seat_version(version: u32) -> u32 {
     // We rely on the wl_pointer.frame event
     const WL_SEAT_MIN_VERSION: u32 = 5;
     const WL_SEAT_MAX_VERSION: u32 = 9;
@@ -437,7 +437,7 @@ fn wl_seat_version(version: u32) -> u32 {
     version.clamp(WL_SEAT_MIN_VERSION, WL_SEAT_MAX_VERSION)
 }
 
-fn wl_output_version(version: u32) -> u32 {
+pub(super) fn wl_output_version(version: u32) -> u32 {
     const WL_OUTPUT_MIN_VERSION: u32 = 2;
     const WL_OUTPUT_MAX_VERSION: u32 = 4;
 

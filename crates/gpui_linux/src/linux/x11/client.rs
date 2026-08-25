@@ -106,6 +106,16 @@ mod state_refresh;
 #[path = "client/tests.rs"]
 mod tests;
 
+use dpi::{get_scale_factor, xkb_state_for_key_event};
+use helpers::{
+    check_compositor_present, check_gtk_frame_extents_supported, create_invisible_cursor,
+    current_pointer_device_states, detect_compositor_gpu, get_scroll_delta_and_update_state,
+    is_pointer_device, make_scroll_wheel_event, mode_refresh_rate,
+    reset_all_pointer_device_scroll_positions, reset_pointer_device_scroll_positions,
+    xdnd_get_supported_atom, xdnd_is_atom_supported, xdnd_send_finished, xdnd_send_status,
+};
+pub(crate) use state_ptr::X11Client;
+
 impl WindowRef {
     pub fn handle(&self) -> AnyWindowHandle {
         self.window.state.borrow().handle

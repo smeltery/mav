@@ -124,5 +124,8 @@ mod window_protocols;
 
 use dmabuf::detect_compositor_gpu;
 pub(crate) use registry_surface::get_window;
-use types::{ClickState, DragState, KeyRepeat, PendingActivation, WaylandClientState};
+use types::{
+    ClickState, DragState, KeyRepeat, PendingActivation, WaylandClientState,
+    take_startup_activation_token_from_environment, wl_output_version, wl_seat_version,
+};
 pub use types::{Globals, InProgressOutput, Output, WaylandClient, WaylandClientStatePtr};

@@ -17,7 +17,7 @@ fn fp3232_to_f32(value: xinput::Fp3232) -> f32 {
     value.integral as f32 + value.frac as f32 / u32::MAX as f32
 }
 
-fn detect_compositor_gpu(
+pub(super) fn detect_compositor_gpu(
     xcb_connection: &XCBConnection,
     screen: &xproto::Screen,
 ) -> Option<CompositorGpuHint> {
@@ -40,7 +40,10 @@ fn detect_compositor_gpu(
     crate::linux::compositor_gpu_hint_from_dev_t(metadata.rdev())
 }
 
-fn check_compositor_present(xcb_connection: &XCBConnection, root: xproto::Window) -> bool {
+pub(super) fn check_compositor_present(
+    xcb_connection: &XCBConnection,
+    root: xproto::Window,
+) -> bool {
     // Method 1: Check for _NET_WM_CM_S{root}
     let atom_name = format!("_NET_WM_CM_S{}", root);
     let atom1 = get_reply(
@@ -109,7 +112,7 @@ fn check_compositor_present(xcb_connection: &XCBConnection, root: xproto::Window
     method1 || method2 || method3
 }
 
-fn check_gtk_frame_extents_supported(
+pub(super) fn check_gtk_frame_extents_supported(
     xcb_connection: &XCBConnection,
     atoms: &XcbAtoms,
     root: xproto::Window,
@@ -138,7 +141,7 @@ fn check_gtk_frame_extents_supported(
     supported_atom_ids.contains(&atoms._GTK_FRAME_EXTENTS)
 }
 
-fn xdnd_is_atom_supported(atom: u32, atoms: &XcbAtoms) -> bool {
+pub(super) fn xdnd_is_atom_supported(atom: u32, atoms: &XcbAtoms) -> bool {
     atom == atoms.TEXT
         || atom == atoms.STRING
         || atom == atoms.UTF8_STRING
@@ -147,7 +150,7 @@ fn xdnd_is_atom_supported(atom: u32, atoms: &XcbAtoms) -> bool {
         || atom == atoms.TextUriList
 }
 
-fn xdnd_get_supported_atom(
+pub(super) fn xdnd_get_supported_atom(
     xcb_connection: &XCBConnection,
     supported_atoms: &XcbAtoms,
     target: xproto::Window,
@@ -175,7 +178,7 @@ fn xdnd_get_supported_atom(
     0
 }
 
-fn xdnd_send_finished(
+pub(super) fn xdnd_send_finished(
     xcb_connection: &XCBConnection,
     atoms: &XcbAtoms,
     source: xproto::Window,
@@ -197,7 +200,7 @@ fn xdnd_send_finished(
     xcb_connection.flush().log_err();
 }
 
-fn xdnd_send_status(
+pub(super) fn xdnd_send_status(
     xcb_connection: &XCBConnection,
     atoms: &XcbAtoms,
     source: xproto::Window,
@@ -222,7 +225,7 @@ fn xdnd_send_status(
 
 /// Recomputes `pointer_device_states` by querying all pointer devices.
 /// When a device is present in `scroll_values_to_preserve`, its value for `ScrollAxisState.scroll_value` is used.
-fn current_pointer_device_states(
+pub(super) fn current_pointer_device_states(
     xcb_connection: &XCBConnection,
     scroll_values_to_preserve: &BTreeMap<xinput::DeviceId, PointerDeviceState>,
 ) -> Option<BTreeMap<xinput::DeviceId, PointerDeviceState>> {
@@ -277,7 +280,7 @@ fn current_pointer_device_states(
 }
 
 /// Returns true if the device is a pointer device. Does not include pointer device groups.
-fn is_pointer_device(type_: xinput::DeviceType) -> bool {
+pub(super) fn is_pointer_device(type_: xinput::DeviceType) -> bool {
     type_ == xinput::DeviceType::SLAVE_POINTER
 }
 
@@ -292,7 +295,7 @@ fn scroll_data_to_axis_state(
     }
 }
 
-fn reset_all_pointer_device_scroll_positions(
+pub(super) fn reset_all_pointer_device_scroll_positions(
     pointer_device_states: &mut BTreeMap<xinput::DeviceId, PointerDeviceState>,
 ) {
     pointer_device_states
@@ -300,13 +303,13 @@ fn reset_all_pointer_device_scroll_positions(
         .for_each(|(_, device_state)| reset_pointer_device_scroll_positions(device_state));
 }
 
-fn reset_pointer_device_scroll_positions(pointer: &mut PointerDeviceState) {
+pub(super) fn reset_pointer_device_scroll_positions(pointer: &mut PointerDeviceState) {
     pointer.horizontal.scroll_value = None;
     pointer.vertical.scroll_value = None;
 }
 
 /// Returns the scroll delta for a smooth scrolling motion event, or `None` if no scroll data is present.
-fn get_scroll_delta_and_update_state(
+pub(super) fn get_scroll_delta_and_update_state(
     pointer: &mut PointerDeviceState,
     event: &xinput::MotionEvent,
 ) -> Option<Point<f32>> {
@@ -337,7 +340,7 @@ fn get_axis_scroll_delta_and_update_state(
     }
 }
 
-fn make_scroll_wheel_event(
+pub(super) fn make_scroll_wheel_event(
     position: Point<Pixels>,
     scroll_delta: Point<f32>,
     modifiers: Modifiers,
@@ -359,7 +362,7 @@ fn make_scroll_wheel_event(
     }
 }
 
-fn create_invisible_cursor(
+pub(super) fn create_invisible_cursor(
     connection: &XCBConnection,
 ) -> anyhow::Result<crate::linux::x11::client::xproto::Cursor> {
     let empty_pixmap = connection.generate_id()?;
