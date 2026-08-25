@@ -107,6 +107,6 @@
             PathBuf::from("C:\\abs\\b")
         } else {
             PathBuf::from("/abs/b")
-    };
-    assert_eq!(joined, vec![expected_escape, expected_abs]);
-}
+        };
+        assert_eq!(joined, vec![expected_escape, expected_abs]);
+    }
