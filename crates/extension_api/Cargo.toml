@@ -2,7 +2,7 @@
 name = "mav_extension_api"
 version = "0.8.0"
 description = "APIs for creating Mav extensions in Rust"
-repository = "https://github.com/dotbrains/mav"
+repository = "https://github.com/smeltery/mav"
 documentation = "https://docs.rs/mav_extension_api"
 keywords = ["mav", "extension"]
 edition.workspace = true

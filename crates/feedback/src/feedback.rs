@@ -16,14 +16,14 @@ actions!(
     ]
 );
 
-const MAV_REPO_URL: &str = "https://github.com/dotbrains/mav";
+const MAV_REPO_URL: &str = "https://github.com/smeltery/mav";
 
-const REQUEST_FEATURE_URL: &str = "https://github.com/dotbrains/mav/discussions/new/choose";
+const REQUEST_FEATURE_URL: &str = "https://github.com/smeltery/mav/discussions/new/choose";
 
 fn file_bug_report_url(specs: &SystemSpecs) -> String {
     format!(
         concat!(
-            "https://github.com/dotbrains/mav/issues/new",
+            "https://github.com/smeltery/mav/issues/new",
             "?",
             "template=10_bug_report.yml",
             "&",
@@ -35,7 +35,7 @@ fn file_bug_report_url(specs: &SystemSpecs) -> String {
 
 fn email_mav_url(specs: &SystemSpecs) -> String {
     format!(
-        concat!("mailto:hello@dotbrains.dev", "?", "body={}"),
+        concat!("mailto:hello@smeltery.dev", "?", "body={}"),
         email_body(specs)
     )
 }

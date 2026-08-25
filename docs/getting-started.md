@@ -1,11 +1,11 @@
 # Getting Started
 
-`mav` is the public dotbrains workspace for building and maintaining a Mav-based editor distribution. The repository keeps the editor source, extension host, bundled extension examples, assets, Nix packaging, and development tooling. Website content, community automation, hosted-service legal pages, and release machinery that is not needed for development have been removed.
+`mav` is the public smeltery workspace for building and maintaining a Mav-based editor distribution. The repository keeps the editor source, extension host, bundled extension examples, assets, Nix packaging, and development tooling. Website content, community automation, hosted-service legal pages, and release machinery that is not needed for development have been removed.
 
 ## Prerequisites
 
 - macOS or Linux for local development.
-- GitHub access to `dotbrains/mav`.
+- GitHub access to `smeltery/mav`.
 - Flox for the default development shell.
 - Nix with flakes enabled when validating package builds.
 - A working Rust toolchain. The Flox activation hook respects `rust-toolchain.toml`.
@@ -13,7 +13,7 @@
 ## First Run
 
 ```bash
-git clone https://github.com/dotbrains/mav.git
+git clone https://github.com/smeltery/mav.git
 cd mav
 flox activate
 cargo run -p mav --bin mav

@@ -1,6 +1,6 @@
 # Contributing to mav
 
-This is a private dotbrains repository. Contributions should focus on the editor runtime, extension support, assets, build tooling, Nix packaging, and documentation required to operate the private workspace.
+This is a private smeltery repository. Contributions should focus on the editor runtime, extension support, assets, build tooling, Nix packaging, and documentation required to operate the private workspace.
 
 ## Local Setup
 
@@ -26,7 +26,7 @@ pre-commit run --all-files
 
 ## Repository Hygiene
 
-Do not reintroduce public website deployment, community issue automation, sponsorship content, or hosted-service legal pages unless dotbrains explicitly needs them.
+Do not reintroduce public website deployment, community issue automation, sponsorship content, or hosted-service legal pages unless smeltery explicitly needs them.
 
 Before removing crates, run:
 

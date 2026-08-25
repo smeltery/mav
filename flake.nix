@@ -1,5 +1,5 @@
 {
-  description = "mav is a dotbrains editor workspace for app core and extensions.";
+  description = "mav is a smeltery editor workspace for app core and extensions.";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";

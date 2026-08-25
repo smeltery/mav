@@ -4,10 +4,10 @@
 
 ## Current Release Posture
 
-- Source repository: public GitHub repository under `dotbrains`.
+- Source repository: public GitHub repository under `smeltery`.
 - License: PolyForm Shield License 1.0.0.
 - Build validation: Cargo, Nix, Flox, and pre-commit.
-- Distribution: manual until a dotbrains release channel is defined.
+- Distribution: manual until a smeltery release channel is defined.
 
 ## Manual Build
 

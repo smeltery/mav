@@ -28,6 +28,6 @@ flowchart LR
 
 ## Pruning Policy
 
-Keep code required to build, test, package, and run the editor and extensions. Remove public project operations, website deployment, issue triage, sponsorship, hosted legal pages, and organization-specific release automation unless a dotbrains workflow needs them.
+Keep code required to build, test, package, and run the editor and extensions. Remove public project operations, website deployment, issue triage, sponsorship, hosted legal pages, and organization-specific release automation unless a smeltery workflow needs them.
 
 Large files remain where they are domain data, generated fixtures, lockfiles, binary assets, or mature implementation modules whose split would be higher-risk than useful. Split large files only when a responsibility boundary is obvious and tests can cover the move.

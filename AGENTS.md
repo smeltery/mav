@@ -2,7 +2,7 @@
 
 ## Scope
 
-This repository is a private dotbrains port focused on the editor runtime, assets, extensions, Nix packaging, and developer tooling. Remove public-project process surface when it is unrelated to private development.
+This repository is a private smeltery port focused on the editor runtime, assets, extensions, Nix packaging, and developer tooling. Remove public-project process surface when it is unrelated to private development.
 
 ## Development
 

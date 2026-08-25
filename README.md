@@ -2,7 +2,7 @@
 
 <img width="2048" height="1287" alt="10266" src="https://github.com/user-attachments/assets/7ab2fd83-2b38-45b9-a6e9-40d74d89dda2" />
 
-[![CI](https://github.com/dotbrains/mav/actions/workflows/ci.yml/badge.svg)](https://github.com/dotbrains/mav/actions/workflows/ci.yml)
+[![CI](https://github.com/smeltery/mav/actions/workflows/ci.yml/badge.svg)](https://github.com/smeltery/mav/actions/workflows/ci.yml)
 [![License: PolyForm Shield 1.0.0](https://img.shields.io/badge/license-PolyForm%20Shield%201.0.0-blue.svg)](LICENSE)
 [![Platform: macOS + Linux](https://img.shields.io/badge/platform-macOS%20%2B%20Linux-lightgrey.svg)](docs/getting-started.md)
 [![Rust: stable](https://img.shields.io/badge/rust-stable-orange.svg)](CONTRIBUTING.md)
@@ -15,7 +15,7 @@ settings, packaging scripts, and reproducible developer environments in one
 repository.
 
 ```console
-$ gh repo clone dotbrains/mav
+$ gh repo clone smeltery/mav
 $ cd mav
 $ flox activate
 $ cargo run -p mav --bin mav
@@ -34,7 +34,7 @@ See [docs/README.md](docs/README.md) for the full documentation index,
 Clone the public repository:
 
 ```sh
-gh repo clone dotbrains/mav
+gh repo clone smeltery/mav
 cd mav
 ```
 
