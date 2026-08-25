@@ -14,6 +14,13 @@ use std::path::Path;
 use std::sync::Arc;
 use util::markdown::MarkdownCodeBlock;
 
+pub(super) use crate::ToolCallEventStream;
+use crate::tools::tool_permissions::{
+    ResolvedProjectPath, authorize_symlink_access, canonicalize_worktree_roots,
+    resolve_global_skill_path, resolve_project_path,
+};
+use crate::{AgentTool, ToolInput, outline};
+
 mod formatting;
 mod global_skill;
 #[cfg(test)]
