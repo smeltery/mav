@@ -34,6 +34,9 @@ mod render;
 mod root_render;
 mod state;
 
+pub(super) use state::{Drag, SelectedMemoryRange, ViewState, ViewStateHandle};
+pub(super) use state::{HEX_BYTES_MEMOIMAV, UNKNOWN_BYTE};
+
 pub(crate) struct MemoryView {
     workspace: WeakEntity<Workspace>,
     stack_frame_list: WeakEntity<StackFrameList>,
@@ -52,7 +55,7 @@ impl Focusable for MemoryView {
     }
 }
 
-struct ViewWidth {
+pub(super) struct ViewWidth {
     width: u8,
     label: SharedString,
 }

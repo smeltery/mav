@@ -45,6 +45,8 @@ mod root_render;
 #[cfg(test)]
 mod tests;
 
+pub(super) use completion::ConsoleQueryBarCompletionProvider;
+
 pub struct Console {
     console: Entity<Editor>,
     query_bar: Entity<Editor>,

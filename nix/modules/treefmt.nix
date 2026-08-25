@@ -7,6 +7,12 @@
         programs.rustfmt.enable = true;
         settings.global.excludes = [
           "crates/debugger_ui/src/tests/**"
+          "crates/debugger_ui/src/debugger_panel/**"
+          "crates/debugger_ui/src/session/running/breakpoint_list/**"
+          "crates/debugger_ui/src/session/running/console/**"
+          "crates/debugger_ui/src/session/running/memory_view/**"
+          "crates/debugger_ui/src/session/running/stack_frame_list/**"
+          "crates/debugger_ui/src/session/running/variable_list/**"
           "crates/agent/src/agent_tests/**"
           "crates/agent/src/tools/terminal_tool_tests/**"
           "crates/search/src/buffer_search/**"
@@ -19,6 +25,12 @@
         ];
         settings.formatter.rustfmt.excludes = [
           "crates/collab/tests/integration/editor_diagnostics_refresh_tail.rs"
+          "crates/debugger_ui/src/debugger_panel/**"
+          "crates/debugger_ui/src/session/running/breakpoint_list/**"
+          "crates/debugger_ui/src/session/running/console/**"
+          "crates/debugger_ui/src/session/running/memory_view/**"
+          "crates/debugger_ui/src/session/running/stack_frame_list/**"
+          "crates/debugger_ui/src/session/running/variable_list/**"
           "crates/agent/src/agent_tests/**"
           "crates/agent/src/tools/terminal_tool_tests/**"
           "crates/search/src/buffer_search/**"

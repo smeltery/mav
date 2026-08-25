@@ -89,7 +89,7 @@ impl BreakpointEntry {
 
 bitflags::bitflags! {
     #[derive(Clone, Copy)]
-    pub struct SupportedBreakpointProperties: u32 {
+    pub(super) struct SupportedBreakpointProperties: u32 {
         const LOG = 1 << 0;
         const CONDITION = 1 << 1;
         const HIT_CONDITION = 1 << 2;

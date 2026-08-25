@@ -84,3 +84,5 @@ mod render;
 mod scenarios;
 mod session_lifecycle;
 mod workspace_setup;
+
+pub(super) use provider::DebuggerProvider;

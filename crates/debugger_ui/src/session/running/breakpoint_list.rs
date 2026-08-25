@@ -5,7 +5,7 @@ use std::{
     time::Duration,
 };
 
-use dap::{Capabilities, ExceptionBreakpointsFilter, adapters::DebugAdapterName};
+use dap::{ExceptionBreakpointsFilter, adapters::DebugAdapterName};
 use db::kvp::KeyValueStore;
 use editor::Editor;
 use gpui::{
@@ -48,6 +48,8 @@ mod list_render;
 mod root_render;
 mod strip;
 
+pub(super) use entry::SupportedBreakpointProperties;
+
 pub(crate) enum SelectedBreakpointKind {
     Source,
     Exception,
@@ -76,75 +78,42 @@ impl Focusable for BreakpointList {
 }
 
 #[derive(Clone, Copy, PartialEq)]
-enum ActiveBreakpointStripMode {
+pub(super) enum ActiveBreakpointStripMode {
     Log,
     Condition,
     HitCondition,
 }
 
-struct LineBreakpoint {
+pub(super) struct LineBreakpoint {
     name: SharedString,
     dir: Option<SharedString>,
     line: u32,
     breakpoint: SourceBreakpoint,
 }
 
-struct ExceptionBreakpoint {
+pub(super) struct ExceptionBreakpoint {
     id: String,
     data: ExceptionBreakpointsFilter,
     is_enabled: bool,
 }
 
 #[derive(Clone, Debug)]
-struct DataBreakpoint(project::debugger::session::DataBreakpointState);
+pub(super) struct DataBreakpoint(project::debugger::session::DataBreakpointState);
 
-enum BreakpointEntryKind {
+pub(super) enum BreakpointEntryKind {
     LineBreakpoint(LineBreakpoint),
     ExceptionBreakpoint(ExceptionBreakpoint),
     DataBreakpoint(DataBreakpoint),
 }
 
 #[derive(Clone, Debug)]
-struct BreakpointEntry {
+pub(super) struct BreakpointEntry {
     kind: BreakpointEntryKind,
     weak: WeakEntity<BreakpointList>,
 }
 
-impl From<&Capabilities> for SupportedBreakpointProperties {
-    fn from(caps: &Capabilities) -> Self {
-        let mut this = Self::empty();
-        for (prop, offset) in [
-            (caps.supports_log_points, Self::LOG),
-            (caps.supports_conditional_breakpoints, Self::CONDITION),
-            (
-                caps.supports_hit_conditional_breakpoints,
-                Self::HIT_CONDITION,
-            ),
-            (
-                caps.supports_exception_options,
-                Self::EXCEPTION_FILTER_OPTIONS,
-            ),
-        ] {
-            if prop.unwrap_or_default() {
-                this.insert(offset);
-            }
-        }
-        this
-    }
-}
-
-impl SupportedBreakpointProperties {
-    fn for_exception_breakpoints(self) -> Self {
-        // TODO: we don't yet support conditions for exception breakpoints at the data layer, hence all props are disabled here.
-        Self::empty()
-    }
-    fn for_data_breakpoints(self) -> Self {
-        // TODO: we don't yet support conditions for data breakpoints at the data layer, hence all props are disabled here.
-        Self::empty()
-    }
-}
 #[derive(IntoElement)]
-struct BreakpointOptionsStrip {
+pub(super) struct BreakpointOptionsStrip {
     props: SupportedBreakpointProperties,
     breakpoint: BreakpointEntry,
     is_selected: bool,

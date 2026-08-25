@@ -3,12 +3,12 @@ use super::*;
 pub(crate) struct SubView {
     inner: AnyView,
     item_focus_handle: FocusHandle,
-    kind: DebuggerPaneItem,
+    pub(super) kind: DebuggerPaneItem,
     running_state: WeakEntity<RunningState>,
     host_pane: WeakEntity<Pane>,
     show_indicator: Box<dyn Fn(&App) -> bool>,
-    actions: Option<Box<dyn FnMut(&mut Window, &mut App) -> AnyElement>>,
-    hovered: bool,
+    pub(super) actions: Option<Box<dyn FnMut(&mut Window, &mut App) -> AnyElement>>,
+    pub(super) hovered: bool,
 }
 
 impl SubView {
@@ -124,7 +124,7 @@ impl SubView {
         self.actions = Some(actions);
     }
 
-    fn set_host_pane(&mut self, host_pane: WeakEntity<Pane>) {
+    pub(super) fn set_host_pane(&mut self, host_pane: WeakEntity<Pane>) {
         self.host_pane = host_pane;
     }
 }

@@ -1,6 +1,6 @@
 use super::*;
 
-struct DebuggerProvider(Entity<DebugPanel>);
+pub(super) struct DebuggerProvider(Entity<DebugPanel>);
 
 impl workspace::DebuggerProvider for DebuggerProvider {
     fn start_session(

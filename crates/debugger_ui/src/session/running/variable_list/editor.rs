@@ -5,9 +5,9 @@ impl VariableList {
         default: &str,
         window: &mut Window,
         cx: &mut App,
-    ) -> Entity<Editor> {
+    ) -> Entity<::editor::Editor> {
         let editor = cx.new(|cx| {
-            let mut editor = Editor::single_line(window, cx);
+            let mut editor = ::editor::Editor::single_line(window, cx);
 
             let refinement = TextStyleRefinement {
                 font_size: Some(
@@ -20,7 +20,7 @@ impl VariableList {
             };
             editor.set_text_style_refinement(refinement);
             editor.set_text(default, window, cx);
-            editor.select_all(&editor::actions::SelectAll, window, cx);
+            editor.select_all(&::editor::actions::SelectAll, window, cx);
             editor
         });
         editor.focus_handle(cx).focus(window, cx);

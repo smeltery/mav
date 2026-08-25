@@ -1,6 +1,6 @@
 use super::*;
 
-struct ConsoleQueryBarCompletionProvider(WeakEntity<Console>);
+pub(super) struct ConsoleQueryBarCompletionProvider(WeakEntity<Console>);
 
 impl CompletionProvider for ConsoleQueryBarCompletionProvider {
     fn completions(
@@ -165,7 +165,7 @@ impl ConsoleQueryBarCompletionProvider {
         })
     }
 
-    fn replace_range_for_completion(
+    pub(super) fn replace_range_for_completion(
         buffer_text: &String,
         buffer_position: Anchor,
         new_bytes: &[u8],
