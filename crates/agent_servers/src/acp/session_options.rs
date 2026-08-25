@@ -64,9 +64,9 @@ pub(super) fn config_state(
 }
 
 pub(super) struct AcpSessionModes {
-    session_id: acp::SessionId,
-    connection: ConnectionTo<Agent>,
-    state: Rc<RefCell<acp::SessionModeState>>,
+    pub(super) session_id: acp::SessionId,
+    pub(super) connection: ConnectionTo<Agent>,
+    pub(super) state: Rc<RefCell<acp::SessionModeState>>,
 }
 
 impl acp_thread::AgentSessionModes for AcpSessionModes {
@@ -106,11 +106,11 @@ impl acp_thread::AgentSessionModes for AcpSessionModes {
 }
 
 pub(super) struct AcpSessionConfigOptions {
-    session_id: acp::SessionId,
-    connection: ConnectionTo<Agent>,
-    state: Rc<RefCell<Vec<acp::SessionConfigOption>>>,
-    watch_tx: Rc<RefCell<watch::Sender<()>>>,
-    watch_rx: watch::Receiver<()>,
+    pub(super) session_id: acp::SessionId,
+    pub(super) connection: ConnectionTo<Agent>,
+    pub(super) state: Rc<RefCell<Vec<acp::SessionConfigOption>>>,
+    pub(super) watch_tx: Rc<RefCell<watch::Sender<()>>>,
+    pub(super) watch_rx: watch::Receiver<()>,
 }
 
 impl acp_thread::AgentSessionConfigOptions for AcpSessionConfigOptions {
