@@ -20,4 +20,4 @@ pub use paths::{
     decide_permission_for_path, decide_permission_for_paths, most_restrictive, normalize_path,
 };
 
-use hardcoded::check_hardcoded_security_rules;
+use hardcoded::{check_hardcoded_security_rules, INVALID_TERMINAL_COMMAND_MESSAGE};
