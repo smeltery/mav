@@ -99,6 +99,8 @@ pub(crate) struct ActiveSettings(pub(crate) HashMap<WeakEntity<Project>, Project
 impl Global for ActiveSettings {}
 
 pub use workspace_actions::init;
+pub(crate) use model::contains_uppercase;
+pub(crate) use view_navigation::buffer_search_query;
 
 #[cfg(test)]
 mod tests;

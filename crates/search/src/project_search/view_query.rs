@@ -1,7 +1,7 @@
 use super::*;
 
 impl ProjectSearchView {
-    fn search(&mut self, cx: &mut Context<Self>) {
+    pub(super) fn search(&mut self, cx: &mut Context<Self>) {
         let open_buffers = if self.included_opened_only {
             self.workspace
                 .update(cx, |workspace, cx| self.open_buffers(cx, workspace))
@@ -18,7 +18,7 @@ impl ProjectSearchView {
         self.query_editor.read(cx).text(cx)
     }
 
-    fn build_search_query(
+    pub(super) fn build_search_query(
         &mut self,
         cx: &mut Context<Self>,
         open_buffers: Option<Vec<Entity<Buffer>>>,
@@ -124,7 +124,7 @@ impl ProjectSearchView {
         query
     }
 
-    fn open_buffers(&self, cx: &App, workspace: &Workspace) -> Vec<Entity<Buffer>> {
+    pub(super) fn open_buffers(&self, cx: &App, workspace: &Workspace) -> Vec<Entity<Buffer>> {
         let mut buffers = Vec::new();
         for editor in workspace.items_of_type::<Editor>(cx) {
             if let Some(buffer) = editor.read(cx).buffer().read(cx).as_singleton() {
@@ -152,7 +152,7 @@ impl ProjectSearchView {
         (included, excluded)
     }
 
-    fn parse_path_matches(&self, text: String, cx: &App) -> anyhow::Result<PathMatcher> {
+    pub(super) fn parse_path_matches(&self, text: String, cx: &App) -> anyhow::Result<PathMatcher> {
         let path_style = self.entity.read(cx).project.read(cx).path_style(cx);
         let queries = split_glob_patterns(&text)
             .into_iter()

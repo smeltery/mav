@@ -1,7 +1,7 @@
 use super::*;
 
 impl BufferSearchBar {
-    fn on_query_editor_event(
+    pub(super) fn on_query_editor_event(
         &mut self,
         _editor: &Entity<Editor>,
         event: &editor::EditorEvent,
@@ -32,7 +32,7 @@ impl BufferSearchBar {
         }
     }
 
-    fn on_replacement_editor_event(
+    pub(super) fn on_replacement_editor_event(
         &mut self,
         _: Entity<Editor>,
         event: &editor::EditorEvent,
@@ -45,7 +45,7 @@ impl BufferSearchBar {
         }
     }
 
-    fn on_active_searchable_item_event(
+    pub(super) fn on_active_searchable_item_event(
         &mut self,
         event: &SearchEvent,
         window: &mut Window,
@@ -59,7 +59,7 @@ impl BufferSearchBar {
         }
     }
 
-    fn toggle_case_sensitive(
+    pub(super) fn toggle_case_sensitive(
         &mut self,
         _: &ToggleCaseSensitive,
         window: &mut Window,
@@ -68,7 +68,7 @@ impl BufferSearchBar {
         self.toggle_search_option(SearchOptions::CASE_SENSITIVE, window, cx)
     }
 
-    fn toggle_whole_word(
+    pub(super) fn toggle_whole_word(
         &mut self,
         _: &ToggleWholeWord,
         window: &mut Window,
@@ -77,7 +77,7 @@ impl BufferSearchBar {
         self.toggle_search_option(SearchOptions::WHOLE_WORD, window, cx)
     }
 
-    fn toggle_selection(
+    pub(super) fn toggle_selection(
         &mut self,
         _: &ToggleSelection,
         window: &mut Window,
@@ -94,11 +94,11 @@ impl BufferSearchBar {
         );
     }
 
-    fn toggle_regex(&mut self, _: &ToggleRegex, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn toggle_regex(&mut self, _: &ToggleRegex, window: &mut Window, cx: &mut Context<Self>) {
         self.toggle_search_option(SearchOptions::REGEX, window, cx)
     }
 
-    fn clear_active_searchable_item_matches(&mut self, window: &mut Window, cx: &mut App) {
+    pub(super) fn clear_active_searchable_item_matches(&mut self, window: &mut Window, cx: &mut App) {
         if let Some(active_searchable_item) = self.active_searchable_item.as_ref() {
             self.active_match_index = None;
             self.searchable_items_with_matches
@@ -111,7 +111,7 @@ impl BufferSearchBar {
         self.active_match_index.is_some()
     }
 
-    fn clear_matches(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn clear_matches(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         let mut active_item_matches = None;
         for (searchable_item, matches) in self.searchable_items_with_matches.drain() {
             if let Some(searchable_item) =

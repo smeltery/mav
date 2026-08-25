@@ -1,7 +1,7 @@
 use super::*;
 
 impl Render for ProjectSearchBar {
-    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
+    pub(super) fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let Some(search) = self.active_project_search.clone() else {
             return div().into_any_element();
         };
@@ -400,7 +400,7 @@ impl Render for ProjectSearchBar {
 impl EventEmitter<ToolbarItemEvent> for ProjectSearchBar {}
 
 impl ToolbarItemView for ProjectSearchBar {
-    fn set_active_pane_item(
+    pub(super) fn set_active_pane_item(
         &mut self,
         active_pane_item: Option<&dyn ItemHandle>,
         _: &mut Window,

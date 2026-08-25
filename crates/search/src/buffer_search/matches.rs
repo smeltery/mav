@@ -1,7 +1,7 @@
 use super::*;
 
 impl BufferSearchBar {
-    fn update_matches(
+    pub(super) fn update_matches(
         &mut self,
         reuse_existing_query: bool,
         add_to_history: bool,
@@ -123,7 +123,7 @@ impl BufferSearchBar {
         done_rx
     }
 
-    fn reverse_direction_if_backwards(&self, direction: Direction) -> Direction {
+    pub(super) fn reverse_direction_if_backwards(&self, direction: Direction) -> Direction {
         if self.search_options.contains(SearchOptions::BACKWARDS) {
             direction.opposite()
         } else {

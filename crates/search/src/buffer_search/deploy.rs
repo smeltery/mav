@@ -96,7 +96,7 @@ impl BufferSearchBar {
         true
     }
 
-    fn supported_options(&self, cx: &mut Context<Self>) -> workspace::searchable::SearchOptions {
+    pub(super) fn supported_options(&self, cx: &mut Context<Self>) -> workspace::searchable::SearchOptions {
         self.active_searchable_item
             .as_ref()
             .map(|item| item.supported_options(cx))
@@ -105,7 +105,7 @@ impl BufferSearchBar {
 
     // We provide an expand/collapse button if we are in a multibuffer
     // and not doing a project search.
-    fn needs_expand_collapse_option(&self, cx: &App) -> bool {
+    pub(super) fn needs_expand_collapse_option(&self, cx: &App) -> bool {
         if let Some(item) = &self.active_searchable_item {
             let buffer_kind = item.buffer_kind(cx);
 
@@ -122,11 +122,11 @@ impl BufferSearchBar {
         }
     }
 
-    fn toggle_fold_all(&mut self, _: &ToggleFoldAll, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn toggle_fold_all(&mut self, _: &ToggleFoldAll, window: &mut Window, cx: &mut Context<Self>) {
         self.toggle_fold_all_in_item(window, cx);
     }
 
-    fn toggle_fold_all_in_item(&self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn toggle_fold_all_in_item(&self, window: &mut Window, cx: &mut Context<Self>) {
         if let Some(item) = &self.active_searchable_item {
             if let Some(item) = item.act_as_type(TypeId::of::<Editor>(), cx) {
                 let editor = item.downcast::<Editor>().expect("Is an editor");

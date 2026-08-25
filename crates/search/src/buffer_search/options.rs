@@ -120,7 +120,7 @@ impl BufferSearchBar {
         cx.notify();
     }
 
-    fn select_next_match(
+    pub(super) fn select_next_match(
         &mut self,
         _: &SelectNextMatch,
         window: &mut Window,
@@ -129,7 +129,7 @@ impl BufferSearchBar {
         self.select_match(Direction::Next, 1, window, cx);
     }
 
-    fn select_prev_match(
+    pub(super) fn select_prev_match(
         &mut self,
         _: &SelectPreviousMatch,
         window: &mut Window,

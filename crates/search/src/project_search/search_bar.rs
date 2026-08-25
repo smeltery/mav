@@ -1,7 +1,7 @@
 use super::*;
 
 impl Default for ProjectSearchBar {
-    fn default() -> Self {
+    pub(super) fn default() -> Self {
         Self::new()
     }
 }
@@ -14,7 +14,7 @@ impl ProjectSearchBar {
         }
     }
 
-    fn confirm(&mut self, _: &Confirm, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn confirm(&mut self, _: &Confirm, window: &mut Window, cx: &mut Context<Self>) {
         if let Some(search_view) = self.active_project_search.as_ref() {
             search_view.update(cx, |search_view, cx| {
                 if !search_view
@@ -31,15 +31,15 @@ impl ProjectSearchBar {
         }
     }
 
-    fn tab(&mut self, _: &Tab, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn tab(&mut self, _: &Tab, window: &mut Window, cx: &mut Context<Self>) {
         self.cycle_field(Direction::Next, window, cx);
     }
 
-    fn backtab(&mut self, _: &Backtab, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn backtab(&mut self, _: &Backtab, window: &mut Window, cx: &mut Context<Self>) {
         self.cycle_field(Direction::Prev, window, cx);
     }
 
-    fn focus_search(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn focus_search(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if let Some(search_view) = self.active_project_search.as_ref() {
             search_view.update(cx, |search_view, cx| {
                 search_view.query_editor.focus_handle(cx).focus(window, cx);
@@ -47,7 +47,7 @@ impl ProjectSearchBar {
         }
     }
 
-    fn cycle_field(&mut self, direction: Direction, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn cycle_field(&mut self, direction: Direction, window: &mut Window, cx: &mut Context<Self>) {
         let active_project_search = match &self.active_project_search {
             Some(active_project_search) => active_project_search,
             None => return,
@@ -115,7 +115,7 @@ impl ProjectSearchBar {
         true
     }
 
-    fn toggle_replace(&mut self, _: &ToggleReplace, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn toggle_replace(&mut self, _: &ToggleReplace, window: &mut Window, cx: &mut Context<Self>) {
         if let Some(search) = &self.active_project_search {
             search.update(cx, |this, cx| {
                 this.replace_enabled = !this.replace_enabled;
@@ -130,7 +130,7 @@ impl ProjectSearchBar {
         }
     }
 
-    fn toggle_filters(&mut self, window: &mut Window, cx: &mut Context<Self>) -> bool {
+    pub(super) fn toggle_filters(&mut self, window: &mut Window, cx: &mut Context<Self>) -> bool {
         if let Some(search_view) = self.active_project_search.as_ref() {
             search_view.update(cx, |search_view, cx| {
                 search_view.toggle_filters(cx);
@@ -150,7 +150,7 @@ impl ProjectSearchBar {
         }
     }
 
-    fn toggle_opened_only(&mut self, window: &mut Window, cx: &mut Context<Self>) -> bool {
+    pub(super) fn toggle_opened_only(&mut self, window: &mut Window, cx: &mut Context<Self>) -> bool {
         if self.active_project_search.is_none() {
             return false;
         }
@@ -180,7 +180,7 @@ impl ProjectSearchBar {
         true
     }
 
-    fn is_opened_only_enabled(&self, cx: &App) -> bool {
+    pub(super) fn is_opened_only_enabled(&self, cx: &App) -> bool {
         if let Some(search_view) = self.active_project_search.as_ref() {
             search_view.read(cx).included_opened_only
         } else {
@@ -188,7 +188,7 @@ impl ProjectSearchBar {
         }
     }
 
-    fn move_focus_to_results(&self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn move_focus_to_results(&self, window: &mut Window, cx: &mut Context<Self>) {
         if let Some(search_view) = self.active_project_search.as_ref() {
             search_view.update(cx, |search_view, cx| {
                 search_view.move_focus_to_results(window, cx);
@@ -197,7 +197,7 @@ impl ProjectSearchBar {
         }
     }
 
-    fn next_history_query(
+    pub(super) fn next_history_query(
         &mut self,
         _: &NextHistoryQuery,
         window: &mut Window,
@@ -245,7 +245,7 @@ impl ProjectSearchBar {
         }
     }
 
-    fn previous_history_query(
+    pub(super) fn previous_history_query(
         &mut self,
         _: &PreviousHistoryQuery,
         window: &mut Window,
@@ -306,7 +306,7 @@ impl ProjectSearchBar {
         }
     }
 
-    fn select_next_match(
+    pub(super) fn select_next_match(
         &mut self,
         _: &SelectNextMatch,
         window: &mut Window,
@@ -319,7 +319,7 @@ impl ProjectSearchBar {
         }
     }
 
-    fn select_prev_match(
+    pub(super) fn select_prev_match(
         &mut self,
         _: &SelectPreviousMatch,
         window: &mut Window,
@@ -332,7 +332,7 @@ impl ProjectSearchBar {
         }
     }
 
-    fn open_text_finder(
+    pub(super) fn open_text_finder(
         &mut self,
         _: &OpenTextFinder,
         window: &mut Window,

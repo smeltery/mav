@@ -1,14 +1,14 @@
 use super::*;
 
 impl BufferSearchBar {
-    fn tab(&mut self, _: &Tab, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn tab(&mut self, _: &Tab, window: &mut Window, cx: &mut Context<Self>) {
         self.cycle_field(Direction::Next, window, cx);
     }
 
-    fn backtab(&mut self, _: &Backtab, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn backtab(&mut self, _: &Backtab, window: &mut Window, cx: &mut Context<Self>) {
         self.cycle_field(Direction::Prev, window, cx);
     }
-    fn cycle_field(&mut self, direction: Direction, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn cycle_field(&mut self, direction: Direction, window: &mut Window, cx: &mut Context<Self>) {
         let mut handles = vec![self.query_editor.focus_handle(cx)];
         if self.replace_enabled {
             handles.push(self.replacement_editor.focus_handle(cx));
@@ -31,7 +31,7 @@ impl BufferSearchBar {
         cx.stop_propagation();
     }
 
-    fn next_history_query(
+    pub(super) fn next_history_query(
         &mut self,
         _: &NextHistoryQuery,
         window: &mut Window,
@@ -53,7 +53,7 @@ impl BufferSearchBar {
         }
     }
 
-    fn previous_history_query(
+    pub(super) fn previous_history_query(
         &mut self,
         _: &PreviousHistoryQuery,
         window: &mut Window,
@@ -84,12 +84,12 @@ impl BufferSearchBar {
         }
     }
 
-    fn focus(&self, handle: &gpui::FocusHandle, window: &mut Window, cx: &mut App) {
+    pub(super) fn focus(&self, handle: &gpui::FocusHandle, window: &mut Window, cx: &mut App) {
         window.invalidate_character_coordinates();
         window.focus(handle, cx);
     }
 
-    fn toggle_replace(&mut self, _: &ToggleReplace, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn toggle_replace(&mut self, _: &ToggleReplace, window: &mut Window, cx: &mut Context<Self>) {
         if self.active_searchable_item.is_some() {
             self.replace_enabled = !self.replace_enabled;
             let handle = if self.replace_enabled {
@@ -102,7 +102,7 @@ impl BufferSearchBar {
         }
     }
 
-    fn replace_next(&mut self, _: &ReplaceNext, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn replace_next(&mut self, _: &ReplaceNext, window: &mut Window, cx: &mut Context<Self>) {
         let mut should_propagate = true;
         if !self.dismissed
             && self.active_search.is_some()
@@ -157,7 +157,7 @@ impl BufferSearchBar {
         str.chars().any(|c| c.is_uppercase())
     }
 
-    fn smartcase(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn smartcase(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if self.should_use_smartcase_search(cx) {
             let query = self.query(cx);
             if !query.is_empty() {
@@ -169,7 +169,7 @@ impl BufferSearchBar {
         }
     }
 
-    fn adjust_query_regex_language(&self, cx: &mut App) {
+    pub(super) fn adjust_query_regex_language(&self, cx: &mut App) {
         let enable = self.search_options.contains(SearchOptions::REGEX);
         let query_buffer = self
             .query_editor
@@ -199,7 +199,7 @@ impl BufferSearchBar {
     ///
     /// Clears the case sensitivity when the search bar is dismissed so that
     /// only the editor's settings are respected.
-    fn sync_select_next_case_sensitivity(&self, cx: &mut Context<Self>) {
+    pub(super) fn sync_select_next_case_sensitivity(&self, cx: &mut Context<Self>) {
         let case_sensitive = match self.dismissed {
             true => None,
             false => Some(self.search_options.contains(SearchOptions::CASE_SENSITIVE)),

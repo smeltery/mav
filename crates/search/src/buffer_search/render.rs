@@ -5,6 +5,7 @@ impl Render for BufferSearchBar {
         let focus_handle = self.focus_handle(cx);
 
         let split_buttons = self.render_split_buttons(window, cx);
+        let has_splittable_editor = self.splittable_editor.is_some();
 
         let collapse_expand_button = if self.needs_expand_collapse_option(cx) {
             let query_editor_focus = self.query_editor.focus_handle(cx);

@@ -1,7 +1,7 @@
 use super::*;
 
 impl ProjectSearchView {
-    fn select_match(&mut self, direction: Direction, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn select_match(&mut self, direction: Direction, window: &mut Window, cx: &mut Context<Self>) {
         if let Some(index) = self.active_match_index {
             let match_ranges = self.entity.read(cx).match_ranges.clone();
 
@@ -42,7 +42,7 @@ impl ProjectSearchView {
         }
     }
 
-    fn focus_query_editor(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn focus_query_editor(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         self.query_editor.update(cx, |query_editor, cx| {
             query_editor.select_all(&SelectAll, window, cx);
         });
@@ -79,7 +79,7 @@ impl ProjectSearchView {
         self.entity_changed(window, cx);
     }
 
-    fn set_query(&mut self, query: &str, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn set_query(&mut self, query: &str, window: &mut Window, cx: &mut Context<Self>) {
         self.set_search_editor(SearchInputKind::Query, query, window, cx);
         if EditorSettings::get_global(cx).use_smartcase_search
             && !query.is_empty()
@@ -90,7 +90,7 @@ impl ProjectSearchView {
         }
     }
 
-    fn set_search_editor(
+    pub(super) fn set_search_editor(
         &mut self,
         kind: SearchInputKind,
         text: &str,
@@ -109,7 +109,7 @@ impl ProjectSearchView {
         });
     }
 
-    fn focus_results_editor(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn focus_results_editor(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         self.query_editor.update(cx, |query_editor, cx| {
             let cursor = query_editor.selections.newest_anchor().head();
             query_editor.change_selections(SelectionEffects::no_scroll(), window, cx, |s| {
@@ -120,7 +120,7 @@ impl ProjectSearchView {
         window.focus(&results_handle, cx);
     }
 
-    fn entity_changed(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn entity_changed(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         let match_ranges = self.entity.read(cx).match_ranges.clone();
 
         if match_ranges.is_empty() {
@@ -157,7 +157,7 @@ impl ProjectSearchView {
         }
     }
 
-    fn update_match_index(&mut self, cx: &mut Context<Self>) {
+    pub(super) fn update_match_index(&mut self, cx: &mut Context<Self>) {
         let results_editor = self.results_editor.read(cx);
         let newest_anchor = results_editor.selections.newest_anchor().head();
         let buffer_snapshot = results_editor.buffer().read(cx).snapshot(cx);
@@ -180,7 +180,7 @@ impl ProjectSearchView {
     }
 
     #[ztracing::instrument(skip_all)]
-    fn highlight_matches(
+    pub(super) fn highlight_matches(
         &self,
         match_ranges: &[Range<Anchor>],
         active_index: Option<usize>,
@@ -206,7 +206,7 @@ impl ProjectSearchView {
         self.active_match_index.is_some()
     }
 
-    fn landing_text_minor(&self, cx: &App) -> impl IntoElement {
+    pub(super) fn landing_text_minor(&self, cx: &App) -> impl IntoElement {
         let focus_handle = self.focus_handle.clone();
         v_flex()
             .gap_1()
@@ -265,7 +265,7 @@ impl ProjectSearchView {
             )
     }
 
-    fn border_color_for(&self, panel: InputPanel, cx: &App) -> Hsla {
+    pub(super) fn border_color_for(&self, panel: InputPanel, cx: &App) -> Hsla {
         if self.panels_with_errors.contains_key(&panel) {
             Color::Error.color(cx)
         } else {
@@ -273,7 +273,7 @@ impl ProjectSearchView {
         }
     }
 
-    fn move_focus_to_results(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn move_focus_to_results(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if !self.results_editor.focus_handle(cx).is_focused(window)
             && !self.entity.read(cx).match_ranges.is_empty()
         {
@@ -287,7 +287,7 @@ impl ProjectSearchView {
         &self.results_editor
     }
 
-    fn adjust_query_regex_language(&self, cx: &mut App) {
+    pub(super) fn adjust_query_regex_language(&self, cx: &mut App) {
         let enable = self.search_options.contains(SearchOptions::REGEX);
         let query_buffer = self
             .query_editor

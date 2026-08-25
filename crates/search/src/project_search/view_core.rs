@@ -5,7 +5,7 @@ impl ProjectSearchView {
         self.entity.read(cx).match_ranges.clone()
     }
 
-    fn open_text_finder(
+    pub(super) fn open_text_finder(
         &mut self,
         _: &OpenTextFinder,
         window: &mut Window,
@@ -14,7 +14,7 @@ impl ProjectSearchView {
         TextFinder::open_from_project_search(cx.entity(), window, cx).detach();
     }
 
-    fn toggle_filters(&mut self, cx: &mut Context<Self>) {
+    pub(super) fn toggle_filters(&mut self, cx: &mut Context<Self>) {
         self.filters_enabled = !self.filters_enabled;
         ActiveSettings::update_global(cx, |settings, cx| {
             settings.0.insert(
@@ -24,14 +24,14 @@ impl ProjectSearchView {
         });
     }
 
-    fn current_settings(&self) -> ProjectSearchSettings {
+    pub(super) fn current_settings(&self) -> ProjectSearchSettings {
         ProjectSearchSettings {
             search_options: self.search_options,
             filters_enabled: self.filters_enabled,
         }
     }
 
-    fn set_search_option_enabled(
+    pub(super) fn set_search_option_enabled(
         &mut self,
         option: SearchOptions,
         enabled: bool,
@@ -42,7 +42,7 @@ impl ProjectSearchView {
         }
     }
 
-    fn toggle_search_option(&mut self, option: SearchOptions, cx: &mut Context<Self>) {
+    pub(super) fn toggle_search_option(&mut self, option: SearchOptions, cx: &mut Context<Self>) {
         self.search_options.toggle(option);
         ActiveSettings::update_global(cx, |settings, cx| {
             settings.0.insert(
@@ -53,7 +53,7 @@ impl ProjectSearchView {
         self.adjust_query_regex_language(cx);
     }
 
-    fn toggle_opened_only(&mut self, _window: &mut Window, _cx: &mut Context<Self>) {
+    pub(super) fn toggle_opened_only(&mut self, _window: &mut Window, _cx: &mut Context<Self>) {
         self.included_opened_only = !self.included_opened_only;
     }
 
@@ -61,7 +61,7 @@ impl ProjectSearchView {
         self.replacement_editor.read(cx).text(cx)
     }
 
-    fn replace_next(&mut self, _: &ReplaceNext, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn replace_next(&mut self, _: &ReplaceNext, window: &mut Window, cx: &mut Context<Self>) {
         if self.entity.read(cx).pending_search.is_some() {
             return;
         }
@@ -93,7 +93,7 @@ impl ProjectSearchView {
         }
     }
 
-    fn replace_all(&mut self, _: &ReplaceAll, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn replace_all(&mut self, _: &ReplaceAll, window: &mut Window, cx: &mut Context<Self>) {
         if self.entity.read(cx).pending_search.is_some() {
             self.pending_replace_all = true;
             return;
@@ -140,7 +140,7 @@ impl ProjectSearchView {
         });
     }
 
-    fn toggle_all_search_results(
+    pub(super) fn toggle_all_search_results(
         &mut self,
         _: &ToggleAllSearchResults,
         window: &mut Window,
@@ -149,7 +149,7 @@ impl ProjectSearchView {
         self.update_results_visibility(window, cx);
     }
 
-    fn update_results_visibility(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn update_results_visibility(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         let has_any_folded = self.results_editor.read(cx).has_any_buffer_folded(cx);
         self.results_editor.update(cx, |editor, cx| {
             if has_any_folded {

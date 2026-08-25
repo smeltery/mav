@@ -1,6 +1,6 @@
 use super::*;
 
-fn contains_uppercase(str: &str) -> bool {
+pub(crate) fn contains_uppercase(str: &str) -> bool {
     str.chars().any(|c| c.is_uppercase())
 }
 
