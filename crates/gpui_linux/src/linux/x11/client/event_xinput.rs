@@ -1,7 +1,7 @@
 use super::*;
 
 impl X11Client {
-    fn handle_xinput_event(&self, event: Event) -> Option<()> {
+    pub(super) fn handle_xinput_event(&self, event: Event) -> Option<()> {
         match event {
             Event::XinputButtonPress(event) => {
                 let window = self.get_window(event.event)?;

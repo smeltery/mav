@@ -84,15 +84,15 @@ impl Globals {
 
 #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]
 pub struct InProgressOutput {
-    name: Option<String>,
-    scale: Option<i32>,
-    position: Option<Point<DevicePixels>>,
-    size: Option<Size<DevicePixels>>,
-    subpixel: Option<wl_output::Subpixel>,
+    pub(super) name: Option<String>,
+    pub(super) scale: Option<i32>,
+    pub(super) position: Option<Point<DevicePixels>>,
+    pub(super) size: Option<Size<DevicePixels>>,
+    pub(super) subpixel: Option<wl_output::Subpixel>,
 }
 
 impl InProgressOutput {
-    fn complete(&self) -> Option<Output> {
+    pub(super) fn complete(&self) -> Option<Output> {
         if let Some((position, size)) = self.position.zip(self.size) {
             let scale = self.scale.unwrap_or(1);
             Some(Output {

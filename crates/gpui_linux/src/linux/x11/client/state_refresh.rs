@@ -1,11 +1,11 @@
 use super::*;
 
 impl X11ClientState {
-    fn has_xim(&self) -> bool {
+    pub(super) fn has_xim(&self) -> bool {
         self.ximc.is_some() && self.xim_handler.is_some()
     }
 
-    fn take_xim(&mut self) -> Option<(X11rbClient<Rc<XCBConnection>>, XimHandler)> {
+    pub(super) fn take_xim(&mut self) -> Option<(X11rbClient<Rc<XCBConnection>>, XimHandler)> {
         let ximc = self
             .ximc
             .take()
@@ -20,12 +20,16 @@ impl X11ClientState {
         }
     }
 
-    fn restore_xim(&mut self, ximc: X11rbClient<Rc<XCBConnection>>, xim_handler: XimHandler) {
+    pub(super) fn restore_xim(
+        &mut self,
+        ximc: X11rbClient<Rc<XCBConnection>>,
+        xim_handler: XimHandler,
+    ) {
         self.ximc = Some(ximc);
         self.xim_handler = Some(xim_handler);
     }
 
-    fn update_refresh_loop(&mut self, x_window: xproto::Window) {
+    pub(super) fn update_refresh_loop(&mut self, x_window: xproto::Window) {
         let Some(window_ref) = self.windows.get_mut(&x_window) else {
             return;
         };
@@ -146,7 +150,7 @@ impl X11ClientState {
             .expect("Failed to initialize window refresh timer")
     }
 
-    fn get_cursor_icon(&mut self, style: CursorStyle) -> Option<xproto::Cursor> {
+    pub(super) fn get_cursor_icon(&mut self, style: CursorStyle) -> Option<xproto::Cursor> {
         if let Some(cursor) = self.cursor_cache.get(&style) {
             return *cursor;
         }
@@ -221,7 +225,7 @@ impl X11ClientState {
         Some(cursor)
     }
 
-    fn hide_cursor_until_mouse_moves(&mut self) {
+    pub(super) fn hide_cursor_until_mouse_moves(&mut self) {
         if self.cursor_hidden_window.is_some() {
             return;
         }
@@ -247,7 +251,7 @@ impl X11ClientState {
         self.cursor_hidden_window = Some(focused_window);
     }
 
-    fn restore_cursor_after_hide(&mut self) {
+    pub(super) fn restore_cursor_after_hide(&mut self) {
         let Some(hidden_window) = self.cursor_hidden_window.take() else {
             return;
         };

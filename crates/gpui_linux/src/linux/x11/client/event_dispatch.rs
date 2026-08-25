@@ -1,7 +1,7 @@
 use super::*;
 
 impl X11Client {
-    fn handle_event(&self, event: Event) -> Option<()> {
+    pub(super) fn handle_event(&self, event: Event) -> Option<()> {
         match event {
             Event::UnmapNotify(event) => {
                 let mut state = self.0.borrow_mut();

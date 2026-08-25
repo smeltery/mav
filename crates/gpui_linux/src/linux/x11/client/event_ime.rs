@@ -1,7 +1,7 @@
 use super::*;
 
 impl X11Client {
-    fn handle_xim_callback_event(&self, event: XimCallbackEvent) {
+    pub(super) fn handle_xim_callback_event(&self, event: XimCallbackEvent) {
         match event {
             XimCallbackEvent::XimXEvent(event) => {
                 self.handle_event(event);
@@ -15,7 +15,7 @@ impl X11Client {
         };
     }
 
-    fn xim_handle_event(&self, event: Event) -> Option<()> {
+    pub(super) fn xim_handle_event(&self, event: Event) -> Option<()> {
         match event {
             Event::KeyPress(event) | Event::KeyRelease(event) => {
                 let mut state = self.0.borrow_mut();
@@ -98,7 +98,7 @@ impl X11Client {
         Some(())
     }
 
-    fn handle_keyboard_layout_change(&self) {
+    pub(super) fn handle_keyboard_layout_change(&self) {
         let mut state = self.0.borrow_mut();
         let layout_idx = state.xkb.serialize_layout(STATE_LAYOUT_EFFECTIVE);
         let keymap = state.xkb.get_keymap();

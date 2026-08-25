@@ -69,9 +69,9 @@ impl EdgeConstraints {
 
 #[derive(Copy, Clone, Debug)]
 pub(super) struct Visual {
-    id: xproto::Visualid,
-    colormap: u32,
-    depth: u8,
+    pub(super) id: xproto::Visualid,
+    pub(super) colormap: u32,
+    pub(super) depth: u8,
 }
 
 pub(super) struct VisualSet {
