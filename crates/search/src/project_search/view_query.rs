@@ -28,10 +28,11 @@ impl ProjectSearchView {
         let text = self.search_query_text(cx);
         let included_files = self
             .filters_enabled
-            .then(
-                || match self.parse_path_matches(self.included_files_editor.read(cx).text(cx), cx) {
+            .then(|| {
+                match self.parse_path_matches(self.included_files_editor.read(cx).text(cx), cx) {
                     Ok(included_files) => {
-                        let should_unmark_error = self.panels_with_errors.remove(&InputPanel::Include);
+                        let should_unmark_error =
+                            self.panels_with_errors.remove(&InputPanel::Include);
                         if should_unmark_error.is_some() {
                             cx.notify();
                         }
@@ -46,15 +47,16 @@ impl ProjectSearchView {
                         }
                         PathMatcher::default()
                     }
-                },
-            )
+                }
+            })
             .unwrap_or(PathMatcher::default());
         let excluded_files = self
             .filters_enabled
-            .then(
-                || match self.parse_path_matches(self.excluded_files_editor.read(cx).text(cx), cx) {
+            .then(|| {
+                match self.parse_path_matches(self.excluded_files_editor.read(cx).text(cx), cx) {
                     Ok(excluded_files) => {
-                        let should_unmark_error = self.panels_with_errors.remove(&InputPanel::Exclude);
+                        let should_unmark_error =
+                            self.panels_with_errors.remove(&InputPanel::Exclude);
                         if should_unmark_error.is_some() {
                             cx.notify();
                         }
@@ -70,8 +72,8 @@ impl ProjectSearchView {
                         }
                         PathMatcher::default()
                     }
-                },
-            )
+                }
+            })
             .unwrap_or(PathMatcher::default());
 
         // If the project contains multiple visible worktrees, we match the
