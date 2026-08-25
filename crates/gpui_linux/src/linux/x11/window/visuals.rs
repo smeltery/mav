@@ -26,19 +26,19 @@ pub(super) fn resize_edge_to_moveresize(edge: ResizeEdge) -> u32 {
 
 #[derive(Debug)]
 pub(super) struct EdgeConstraints {
-    top_tiled: bool,
+    pub(super) top_tiled: bool,
     #[allow(dead_code)]
     top_resizable: bool,
 
-    right_tiled: bool,
+    pub(super) right_tiled: bool,
     #[allow(dead_code)]
     right_resizable: bool,
 
-    bottom_tiled: bool,
+    pub(super) bottom_tiled: bool,
     #[allow(dead_code)]
     bottom_resizable: bool,
 
-    left_tiled: bool,
+    pub(super) left_tiled: bool,
     #[allow(dead_code)]
     left_resizable: bool,
 }
@@ -75,11 +75,11 @@ pub(super) struct Visual {
 }
 
 pub(super) struct VisualSet {
-    inherit: Visual,
+    pub(super) inherit: Visual,
     opaque: Option<Visual>,
-    transparent: Option<Visual>,
-    root: u32,
-    black_pixel: u32,
+    pub(super) transparent: Option<Visual>,
+    pub(super) root: u32,
+    pub(super) black_pixel: u32,
 }
 
 pub(super) fn find_visuals(xcb: &XCBConnection, screen_index: usize) -> VisualSet {

@@ -38,7 +38,7 @@ pub struct Globals {
 }
 
 impl Globals {
-    fn new(
+    pub(super) fn new(
         globals: GlobalList,
         executor: ForegroundExecutor,
         qh: QueueHandle<WaylandClientStatePtr>,
@@ -173,23 +173,23 @@ pub(crate) struct WaylandClientState {
 }
 
 pub struct DragState {
-    data_offer: Option<wl_data_offer::WlDataOffer>,
-    window: Option<WaylandWindowStatePtr>,
-    position: Point<Pixels>,
+    pub(super) data_offer: Option<wl_data_offer::WlDataOffer>,
+    pub(super) window: Option<WaylandWindowStatePtr>,
+    pub(super) position: Point<Pixels>,
 }
 
 pub struct ClickState {
-    last_mouse_button: Option<MouseButton>,
-    last_click: Instant,
-    last_location: Point<Pixels>,
-    current_count: usize,
+    pub(super) last_mouse_button: Option<MouseButton>,
+    pub(super) last_click: Instant,
+    pub(super) last_location: Point<Pixels>,
+    pub(super) current_count: usize,
 }
 
 pub(crate) struct KeyRepeat {
-    characters_per_second: u32,
-    delay: Duration,
-    current_id: u64,
-    current_keycode: Option<xkb::Keycode>,
+    pub(super) characters_per_second: u32,
+    pub(super) delay: Duration,
+    pub(super) current_id: u64,
+    pub(super) current_keycode: Option<xkb::Keycode>,
 }
 
 pub(crate) enum PendingActivation {
@@ -345,7 +345,7 @@ impl WaylandClientStatePtr {
 }
 
 impl WaylandClientState {
-    fn hide_cursor_until_mouse_moves(&mut self) {
+    pub(super) fn hide_cursor_until_mouse_moves(&mut self) {
         if self.cursor_hidden_window.is_some() {
             return;
         }
@@ -362,7 +362,7 @@ impl WaylandClientState {
         self.cursor_hidden_window = Some(focused_window);
     }
 
-    fn restore_cursor_after_hide(&mut self) {
+    pub(super) fn restore_cursor_after_hide(&mut self) {
         if self.cursor_hidden_window.take().is_none() {
             return;
         }

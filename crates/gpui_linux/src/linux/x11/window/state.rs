@@ -410,7 +410,7 @@ impl X11WindowState {
         setup_result
     }
 
-    fn content_size(&self) -> Size<Pixels> {
+    pub(super) fn content_size(&self) -> Size<Pixels> {
         self.bounds.size
     }
 }

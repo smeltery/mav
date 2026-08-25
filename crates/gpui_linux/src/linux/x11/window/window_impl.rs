@@ -94,7 +94,7 @@ impl X11Window {
         Ok(Self(ptr))
     }
 
-    fn set_wm_hints<C: Display + Send + Sync + 'static, F: FnOnce() -> C>(
+    pub(super) fn set_wm_hints<C: Display + Send + Sync + 'static, F: FnOnce() -> C>(
         &self,
         failure_context: F,
         wm_hint_property_state: WmHintPropertyState,
@@ -121,7 +121,7 @@ impl X11Window {
         Ok(())
     }
 
-    fn get_root_position(
+    pub(super) fn get_root_position(
         &self,
         position: Point<Pixels>,
     ) -> anyhow::Result<TranslateCoordinatesReply> {
@@ -137,7 +137,7 @@ impl X11Window {
         )
     }
 
-    fn send_moveresize(&self, flag: u32) -> anyhow::Result<()> {
+    pub(super) fn send_moveresize(&self, flag: u32) -> anyhow::Result<()> {
         let state = self.0.state.borrow();
 
         check_reply(

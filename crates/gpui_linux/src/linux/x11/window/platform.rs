@@ -45,7 +45,7 @@ impl PlatformWindow for X11Window {
         }
     }
 
-    fn content_size(&self) -> Size<Pixels> {
+    pub(super) fn content_size(&self) -> Size<Pixels> {
         // After the wgpu migration, X11WindowState::content_size() returns logical pixels
         // (bounds.size is already divided by scale_factor in set_bounds), so no further
         // division is needed here. This matches the Wayland implementation.

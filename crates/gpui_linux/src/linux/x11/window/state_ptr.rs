@@ -51,7 +51,7 @@ impl X11WindowStatePtr {
         Ok(())
     }
 
-    fn set_wm_properties(
+    pub(super) fn set_wm_properties(
         &self,
         mut state: std::cell::RefMut<X11WindowState>,
     ) -> anyhow::Result<()> {
