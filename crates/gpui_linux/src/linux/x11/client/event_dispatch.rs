@@ -358,6 +358,7 @@ impl X11Client {
             | Event::XinputGesturePinchEnd(_)) => {
                 return self.handle_xinput_event(event);
             }
+            _ => {}
         };
 
         Some(())
