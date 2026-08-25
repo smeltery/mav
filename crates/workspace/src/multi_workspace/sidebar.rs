@@ -5,6 +5,15 @@ pub struct SidebarRenderState {
     pub side: SidebarSide,
 }
 
+impl Default for SidebarRenderState {
+    fn default() -> Self {
+        Self {
+            open: false,
+            side: SidebarSide::default(),
+        }
+    }
+}
+
 pub fn sidebar_side_context_menu(
     id: impl Into<ElementId>,
     cx: &App,
