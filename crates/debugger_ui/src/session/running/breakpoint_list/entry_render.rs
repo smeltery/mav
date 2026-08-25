@@ -144,8 +144,6 @@ impl LineBreakpoint {
     }
 }
 
-#[derive(Clone, Debug)]
-
 impl DataBreakpoint {
     pub(super) fn render(
         &self,
