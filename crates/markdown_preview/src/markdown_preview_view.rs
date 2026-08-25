@@ -116,4 +116,4 @@ mod tests;
 #[path = "markdown_preview_view/url.rs"]
 mod url;
 
-pub(crate) use url::resolve_preview_image;
+pub(crate) use url::{handle_url_click, resolve_preview_image};
