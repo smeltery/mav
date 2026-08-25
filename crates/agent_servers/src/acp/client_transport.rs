@@ -4,7 +4,7 @@ use super::request_handlers::{
 };
 use super::*;
 
-fn connect_client_future(
+pub(super) fn connect_client_future(
     name: &'static str,
     transport: impl agent_client_protocol::ConnectTo<Client> + 'static,
     dispatch_tx: mpsc::UnboundedSender<ForegroundWork>,
@@ -85,7 +85,7 @@ fn connect_client_future(
         )
 }
 
-fn client_capabilities_for_agent(
+pub(super) fn client_capabilities_for_agent(
     agent_id: &AgentId,
     supports_boolean_config_options: bool,
 ) -> acp::ClientCapabilities {

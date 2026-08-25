@@ -41,7 +41,7 @@ impl AcpConnection {
         }
     }
 
-    fn session_directories_from_work_dirs(
+    pub(super) fn session_directories_from_work_dirs(
         &self,
         work_dirs: &PathList,
     ) -> Result<SessionDirectories> {
@@ -49,7 +49,7 @@ impl AcpConnection {
         session_directories_from_work_dirs(work_dirs, supports_additional_directories)
     }
 
-    fn open_or_create_session(
+    pub(super) fn open_or_create_session(
         self: Rc<Self>,
         session_id: acp::SessionId,
         project: Entity<Project>,
@@ -186,7 +186,7 @@ impl AcpConnection {
             .spawn(async move { shared_task.await.map_err(|err| anyhow!(err)) })
     }
 
-    fn apply_default_config_options(
+    pub(super) fn apply_default_config_options(
         &self,
         session_id: &acp::SessionId,
         config_options: &Rc<RefCell<Vec<acp::SessionConfigOption>>>,

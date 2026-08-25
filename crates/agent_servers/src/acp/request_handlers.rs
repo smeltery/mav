@@ -1,6 +1,6 @@
 use super::*;
 
-fn session_thread(
+pub(super) fn session_thread(
     ctx: &ClientContext,
     session_id: &acp::SessionId,
 ) -> Result<WeakEntity<AcpThread>, acp::Error> {
@@ -11,7 +11,7 @@ fn session_thread(
         .ok_or_else(|| acp::Error::internal_error().data(format!("unknown session: {session_id}")))
 }
 
-fn respond_err<T: JsonRpcResponse>(responder: Responder<T>, err: acp::Error) {
+pub(super) fn respond_err<T: JsonRpcResponse>(responder: Responder<T>, err: acp::Error) {
     // Log the actual error we're returning — otherwise agents that hit an
     // error path (e.g. unknown session) would see only the generic internal
     // error returned over the wire with no trace of why on the client side.
@@ -22,7 +22,10 @@ fn respond_err<T: JsonRpcResponse>(responder: Responder<T>, err: acp::Error) {
     responder.respond_with_error(err).log_err();
 }
 
-fn respond_result<T: JsonRpcResponse>(responder: Responder<T>, result: Result<T, acp::Error>) {
+pub(super) fn respond_result<T: JsonRpcResponse>(
+    responder: Responder<T>,
+    result: Result<T, acp::Error>,
+) {
     match result {
         Ok(response) => {
             responder.respond(response).log_err();
@@ -31,7 +34,7 @@ fn respond_result<T: JsonRpcResponse>(responder: Responder<T>, result: Result<T,
     }
 }
 
-fn handle_request_permission(
+pub(super) fn handle_request_permission(
     args: acp::RequestPermissionRequest,
     responder: Responder<acp::RequestPermissionResponse>,
     cx: &mut AsyncApp,
@@ -83,7 +86,7 @@ fn handle_request_permission(
     .detach();
 }
 
-fn handle_write_text_file(
+pub(super) fn handle_write_text_file(
     args: acp::WriteTextFileRequest,
     responder: Responder<acp::WriteTextFileResponse>,
     cx: &mut AsyncApp,
@@ -118,7 +121,7 @@ fn handle_write_text_file(
     .detach();
 }
 
-fn handle_read_text_file(
+pub(super) fn handle_read_text_file(
     args: acp::ReadTextFileRequest,
     responder: Responder<acp::ReadTextFileResponse>,
     cx: &mut AsyncApp,
@@ -147,7 +150,7 @@ fn handle_read_text_file(
     .detach();
 }
 
-fn handle_session_notification(
+pub(super) fn handle_session_notification(
     notification: acp::SessionNotification,
     cx: &mut AsyncApp,
     ctx: &ClientContext,

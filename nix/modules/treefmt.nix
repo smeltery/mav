@@ -12,6 +12,7 @@
           "crates/search/src/buffer_search/**"
           "crates/search/src/project_search/**"
           "crates/markdown_preview/src/markdown_preview_view/**"
+          "crates/agent_servers/src/acp/**"
         ];
         settings.formatter.rustfmt.excludes = [
           "crates/collab/tests/integration/editor_diagnostics_refresh_tail.rs"
@@ -20,6 +21,7 @@
           "crates/search/src/buffer_search/**"
           "crates/search/src/project_search/**"
           "crates/markdown_preview/src/markdown_preview_view/**"
+          "crates/agent_servers/src/acp/**"
         ];
       };
     };

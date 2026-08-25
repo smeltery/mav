@@ -9,7 +9,7 @@ pub struct AcpSessionList {
 }
 
 impl AcpSessionList {
-    fn new(connection: ConnectionTo<Agent>, supports_delete: bool) -> Self {
+    pub(super) fn new(connection: ConnectionTo<Agent>, supports_delete: bool) -> Self {
         let (tx, rx) = async_channel::unbounded();
         Self {
             connection,
@@ -25,7 +25,11 @@ impl AcpSessionList {
             .log_err();
     }
 
-    fn send_info_update(&self, session_id: acp::SessionId, update: acp::SessionInfoUpdate) {
+    pub(super) fn send_info_update(
+        &self,
+        session_id: acp::SessionId,
+        update: acp::SessionInfoUpdate,
+    ) {
         self.updates_tx
             .try_send(acp_thread::SessionListUpdate::SessionInfo { session_id, update })
             .log_err();
