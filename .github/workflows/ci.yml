@@ -54,12 +54,17 @@ jobs:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v31
       - uses: flox/install-flox-action@v2
+      # Expose Flox's rustc on PATH so mr-boxington-action keys the cache by
+      # the compiler the build will use (not the literal `norust`).
+      - name: Expose Flox rustc for mbx cache key
+        run: flox activate -- bash -c 'dirname "$(command -v rustc)"' >> "$GITHUB_PATH"
+      - uses: jdx/mr-boxington-action@v1
       - name: format
         run: flox activate -- cargo fmt --all -- --check
       - name: file line budget
         run: script/check-file-lines 500
       - name: manifest check
-        run: flox activate -- cargo check -p mav --bin mav --locked
+        run: flox activate -- mbx check -p mav --bin mav --locked
 
   nix:
     name: nix
