@@ -32,6 +32,25 @@ CARGO_INCREMENTAL = "0"
 [hook]
 on-activate = '''
   rustup show active-toolchain >/dev/null 2>&1 || rustup toolchain install
+
+  if ! command -v mbx >/dev/null 2>&1; then
+    mkdir -p "$HOME/.local/bin"
+    case "$(uname -s)-$(uname -m)" in
+      Darwin-arm64) archive=mbx-aarch64-apple-darwin.tar.gz ;;
+      Linux-x86_64) archive=mbx-x86_64-unknown-linux-gnu.tar.gz ;;
+      Linux-aarch64|Linux-arm64) archive=mbx-aarch64-unknown-linux-gnu.tar.gz ;;
+      *) archive="" ;;
+    esac
+    if [ -n "$archive" ]; then
+      tmp="$(mktemp -d)"
+      if curl -fsSL "https://github.com/jdx/mr-boxington/releases/latest/download/$archive" | tar -xzf - -C "$tmp" && [ -f "$tmp/mbx" ]; then
+        mv "$tmp/mbx" "$HOME/.local/bin/mbx"
+        chmod +x "$HOME/.local/bin/mbx"
+      fi
+      rm -rf "$tmp"
+    fi
+  fi
+  case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac
 '''
 
 [options]
