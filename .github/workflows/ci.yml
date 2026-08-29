@@ -57,7 +57,8 @@ jobs:
       # Expose Flox's rustc on PATH so mr-boxington-action keys the cache by
       # the compiler the build will use (not the literal `norust`).
       - name: Expose Flox rustc for mbx cache key
-        run: flox activate -- bash -c 'dirname "$(command -v rustc)"' >> "$GITHUB_PATH"
+        # Expand command -v inside flox's bash -c, not the runner shell.
+        run: flox activate -- bash -c "dirname \"\$(command -v rustc)\"" >> "$GITHUB_PATH"
       - uses: jdx/mr-boxington-action@v1
       - name: format
         run: flox activate -- cargo fmt --all -- --check
